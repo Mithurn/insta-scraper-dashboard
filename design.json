@@ -1,0 +1,429 @@
+{
+    "dashboard": {
+      "name": "Analytics Dashboard",
+      "theme": "dark",
+      "layout": "sidebar-main-aside",
+      
+      "colors": {
+        "primary": {
+          "background": "#0f1419",
+          "surface": "#1a2332",
+          "surfaceElevated": "#243447",
+          "cyan": "#00d9ff",
+          "cyanGlow": "rgba(0, 217, 255, 0.2)"
+        },
+        "text": {
+          "primary": "#ffffff",
+          "secondary": "#8b9bb3",
+          "muted": "#5a6b82"
+        },
+        "status": {
+          "success": "#00ff88",
+          "warning": "#ff9500",
+          "error": "#ff3b5c",
+          "info": "#9b7dff"
+        },
+        "chart": {
+          "primary": "#00d9ff",
+          "secondary": "#4a5f7f",
+          "background": "rgba(0, 217, 255, 0.05)"
+        }
+      },
+  
+      "typography": {
+        "fontFamily": {
+          "primary": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          "mono": "'JetBrains Mono', 'Fira Code', monospace"
+        },
+        "fontSize": {
+          "xs": "11px",
+          "sm": "13px",
+          "base": "14px",
+          "lg": "16px",
+          "xl": "20px",
+          "2xl": "24px",
+          "3xl": "32px",
+          "4xl": "42px"
+        },
+        "fontWeight": {
+          "normal": 400,
+          "medium": 500,
+          "semibold": 600,
+          "bold": 700
+        }
+      },
+  
+      "spacing": {
+        "xs": "4px",
+        "sm": "8px",
+        "md": "16px",
+        "lg": "24px",
+        "xl": "32px",
+        "2xl": "48px"
+      },
+  
+      "borderRadius": {
+        "sm": "6px",
+        "md": "12px",
+        "lg": "16px",
+        "full": "9999px"
+      },
+  
+      "shadows": {
+        "sm": "0 2px 8px rgba(0, 0, 0, 0.15)",
+        "md": "0 4px 16px rgba(0, 0, 0, 0.25)",
+        "lg": "0 8px 32px rgba(0, 0, 0, 0.35)",
+        "glow": "0 0 24px rgba(0, 217, 255, 0.4)"
+      },
+  
+      "components": {
+        "sidebar": {
+          "width": "75px",
+          "background": "#0f1419",
+          "items": [
+            { "icon": "grid", "type": "primary" },
+            { "icon": "edit", "type": "default" },
+            { "icon": "home", "type": "default" },
+            { "icon": "trending", "type": "default" },
+            { "icon": "clock", "type": "default" },
+            { "icon": "message", "type": "default", "position": "bottom" }
+          ],
+          "itemStyle": {
+            "size": "40px",
+            "borderRadius": "12px",
+            "activeBackground": "#243447",
+            "hoverBackground": "#1a2332"
+          }
+        },
+  
+        "header": {
+          "height": "80px",
+          "background": "#0f1419",
+          "padding": "0 32px",
+          "navigation": {
+            "items": ["Dashboard", "Pages", "Posts"],
+            "activeIndicator": {
+              "color": "#00d9ff",
+              "height": "3px",
+              "position": "bottom"
+            }
+          },
+          "actions": {
+            "search": true,
+            "notifications": true,
+            "profile": {
+              "show": true,
+              "label": "UX Designer",
+              "avatar": true
+            }
+          }
+        },
+  
+        "breadcrumb": {
+          "items": ["DASHBOARD", "STATISTICS"],
+          "separator": ">",
+          "color": "#00d9ff",
+          "fontSize": "11px",
+          "fontWeight": 600,
+          "spacing": "8px"
+        },
+  
+        "statCards": {
+          "layout": "grid",
+          "columns": 4,
+          "gap": "24px",
+          "cards": [
+            {
+              "title": "Views",
+              "value": "121,168,658",
+              "change": "+11.01%",
+              "changeType": "positive",
+              "icon": "eye",
+              "iconColor": "#ffd700"
+            },
+            {
+              "title": "Visits",
+              "value": "728,564",
+              "change": "+25%",
+              "changeType": "positive",
+              "icon": "crosshair",
+              "iconColor": "#9b7dff"
+            },
+            {
+              "title": "New Users",
+              "value": "1,457",
+              "change": "+5%",
+              "changeType": "positive",
+              "icon": "userPlus",
+              "iconColor": "#ff3b5c"
+            },
+            {
+              "title": "Active Users",
+              "value": "5,653",
+              "change": "+16%",
+              "changeType": "positive",
+              "icon": "users",
+              "iconColor": "#00ff88"
+            }
+          ],
+          "cardStyle": {
+            "background": "#1a2332",
+            "borderRadius": "16px",
+            "padding": "24px",
+            "titleSize": "13px",
+            "valueSize": "32px",
+            "changeSize": "13px"
+          }
+        },
+  
+        "viewsChart": {
+          "title": "Views",
+          "height": "400px",
+          "background": "#1a2332",
+          "borderRadius": "16px",
+          "padding": "24px",
+          "controls": {
+            "timeRange": ["Last Week", "April 2023"],
+            "menu": true
+          },
+          "tooltip": {
+            "show": true,
+            "label": "This Week",
+            "value": "220,342,123",
+            "day": "Thu",
+            "background": "#243447",
+            "color": "#ffffff"
+          },
+          "chart": {
+            "type": "area",
+            "data": "weekly",
+            "primaryLine": {
+              "color": "#00d9ff",
+              "width": "3px",
+              "gradient": true,
+              "fill": "rgba(0, 217, 255, 0.1)"
+            },
+            "secondaryLine": {
+              "color": "#4a5f7f",
+              "width": "2px",
+              "gradient": true,
+              "fill": "rgba(74, 95, 127, 0.05)"
+            },
+            "xAxis": {
+              "labels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+              "color": "#5a6b82"
+            },
+            "yAxis": {
+              "min": "100M",
+              "max": "250M",
+              "steps": "50M",
+              "color": "#5a6b82"
+            },
+            "grid": {
+              "show": false
+            }
+          }
+        },
+  
+        "pieChart": {
+          "title": "Chart",
+          "background": "#1a2332",
+          "borderRadius": "16px",
+          "padding": "24px",
+          "centerValue": {
+            "value": "5,824,213",
+            "label": "Label",
+            "valueSize": "32px",
+            "labelSize": "13px"
+          },
+          "segments": [
+            {
+              "label": "Google.com .Inc",
+              "value": "3,124,213 users",
+              "percentage": 53.6,
+              "color": "#00d9ff"
+            },
+            {
+              "label": "Recommended flow",
+              "value": "1,523,151 users",
+              "percentage": 26.1,
+              "color": "#4a7d9f"
+            },
+            {
+              "label": "Other",
+              "value": "948,213 users",
+              "percentage": 16.3,
+              "color": "#2d4a5f"
+            }
+          ],
+          "style": {
+            "donutWidth": "40px",
+            "gap": "4px"
+          }
+        },
+  
+        "activePercentage": {
+          "title": "Active Percentage",
+          "background": "#1a2332",
+          "borderRadius": "16px",
+          "padding": "24px",
+          "totalValue": {
+            "value": "594",
+            "label": "Total",
+            "size": "42px"
+          },
+          "progressBar": {
+            "height": "8px",
+            "background": "#243447",
+            "fillColor": "#00d9ff",
+            "borderRadius": "full",
+            "percentage": 31
+          },
+          "stats": {
+            "online": {
+              "label": "Online",
+              "value": "179 users",
+              "color": "#00d9ff"
+            },
+            "offline": {
+              "label": "Offline",
+              "value": "394 users",
+              "color": "#5a6b82"
+            }
+          }
+        },
+  
+        "sidebar-right": {
+          "width": "320px",
+          "background": "#0f1419",
+          "padding": "32px 24px",
+          "sections": [
+            {
+              "title": "Activities",
+              "type": "activity-feed",
+              "items": [
+                {
+                  "user": "User 1",
+                  "action": "Edited the details of Project X",
+                  "time": "Just now",
+                  "avatar": true
+                },
+                {
+                  "user": "User 2",
+                  "action": "Released a new version",
+                  "time": "54 minutes ago",
+                  "avatar": true
+                },
+                {
+                  "user": "User 3",
+                  "action": "Submitted a bug",
+                  "time": "12 hours ago",
+                  "avatar": true
+                },
+                {
+                  "user": "User 4",
+                  "action": "Modified A data in Page X",
+                  "time": "Today, 11:59 AM",
+                  "avatar": true
+                }
+              ]
+            },
+            {
+              "title": "Contacts",
+              "type": "contact-list",
+              "items": [
+                { "name": "Natali Craig", "avatar": true, "status": "online" },
+                { "name": "Drew Cano", "avatar": true, "status": "offline" },
+                { "name": "Orlando Diggs", "avatar": true, "status": "online" },
+                { "name": "Andi Lane", "avatar": true, "status": "online" },
+                { "name": "Kate Morrison", "avatar": true, "status": "offline" },
+                { "name": "Koray Okumus", "avatar": true, "status": "online" }
+              ]
+            },
+            {
+              "title": "Site speed",
+              "type": "metric-card",
+              "metric": {
+                "type": "circular-progress",
+                "value": "46%",
+                "label": "Loadtime",
+                "change": "+25%",
+                "changeType": "positive",
+                "size": "120px",
+                "strokeWidth": "12px",
+                "color": "#00d9ff"
+              }
+            }
+          ]
+        }
+      },
+  
+      "interactions": {
+        "hover": {
+          "cards": {
+            "transform": "translateY(-2px)",
+            "shadow": "lg",
+            "transition": "0.2s ease"
+          },
+          "buttons": {
+            "opacity": 0.8,
+            "transition": "0.2s ease"
+          }
+        },
+        "active": {
+          "cards": {
+            "transform": "scale(0.98)",
+            "transition": "0.1s ease"
+          }
+        }
+      },
+  
+      "animations": {
+        "pageLoad": {
+          "type": "fade-in-up",
+          "duration": "0.4s",
+          "easing": "ease-out",
+          "stagger": "0.1s"
+        },
+        "chartDraw": {
+          "type": "draw-path",
+          "duration": "1.2s",
+          "easing": "ease-in-out"
+        },
+        "progressBar": {
+          "type": "fill",
+          "duration": "1s",
+          "easing": "ease-out"
+        }
+      },
+  
+      "responsive": {
+        "breakpoints": {
+          "mobile": "480px",
+          "tablet": "768px",
+          "desktop": "1024px",
+          "wide": "1440px"
+        },
+        "behavior": {
+          "mobile": {
+            "sidebar": "hidden",
+            "sidebarRight": "bottom-sheet",
+            "statCards": { "columns": 1 },
+            "charts": { "stack": true }
+          },
+          "tablet": {
+            "sidebar": "collapsed",
+            "sidebarRight": "overlay",
+            "statCards": { "columns": 2 },
+            "charts": { "stack": true }
+          },
+          "desktop": {
+            "sidebar": "visible",
+            "sidebarRight": "visible",
+            "statCards": { "columns": 4 },
+            "charts": { "stack": false }
+          }
+        }
+      }
+    }
+  }

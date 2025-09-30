@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-primary-background text-text-primary font-primary;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-cyan text-primary-background px-4 py-2 rounded-md font-medium hover:bg-primary-cyan/90 transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-primary-surface text-text-primary px-4 py-2 rounded-md font-medium hover:bg-primary-surfaceElevated transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-primary-surface rounded-lg p-6 shadow-md;
+  }
+  
+  .card-elevated {
+    @apply bg-primary-surfaceElevated rounded-lg p-6 shadow-lg;
+  }
+  
+  .input {
+    @apply bg-primary-surface border border-primary-surfaceElevated rounded-md px-3 py-2 text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary-cyan focus:border-transparent;
+  }
+  
+  .table-header {
+    @apply text-text-secondary text-xs font-semibold uppercase tracking-wider;
+  }
+  
+  .table-cell {
+    @apply text-text-primary text-sm;
+  }
+  
+  .status-online {
+    @apply bg-status-success;
+  }
+  
+  .status-offline {
+    @apply bg-text-muted;
+  }
+  
+  .glow-effect {
+    @apply shadow-glow;
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out;
+  }
+  
+  .animate-stagger-1 {
+    animation-delay: 0.1s;
+  }
+  
+  .animate-stagger-2 {
+    animation-delay: 0.2s;
+  }
+  
+  .animate-stagger-3 {
+    animation-delay: 0.3s;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-cyan to-status-info bg-clip-text text-transparent;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(26, 35, 50, 0.8);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1419;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #243447;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00d9ff;
+}
+
+/* Loading animation */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse animation for live data */
+.pulse-live {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
