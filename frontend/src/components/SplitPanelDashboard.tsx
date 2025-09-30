@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useWebSocket } from '../hooks/useWebSocket';
 import { motion, AnimatePresence } from 'framer-motion';
-import MagicBento from './MagicBento';
 import { 
   XAxis, 
   YAxis, 
@@ -19,8 +19,6 @@ import {
   Eye,
   UserCheck,
   ArrowUpRight,
-  ArrowDownRight,
-  ArrowRight,
   ExternalLink,
   BarChart3
 } from 'lucide-react';
@@ -32,7 +30,6 @@ interface Profile {
   followers_count: number;
   following_count: number;
   posts_count: number;
-  engagement_rate: number;
   bio: string;
   profile_pic_url: string;
   is_verified: number;
@@ -43,7 +40,6 @@ interface Profile {
 interface GrowthData {
   date: string;
   followers: number;
-  engagement: number;
 }
 
 const SplitPanelDashboard: React.FC = () => {
@@ -57,6 +53,14 @@ const SplitPanelDashboard: React.FC = () => {
       return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
     }
     return num.toString();
+  };
+
+  // Function to format following count with special handling for 0
+  const formatFollowingCount = (num: number): string => {
+    if (num === 0) {
+      return "Private";
+    }
+    return formatNumber(num);
   };
 
   // Function to get profile picture with fallbacks
@@ -76,7 +80,7 @@ const SplitPanelDashboard: React.FC = () => {
   };
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [, setLoading] = useState(true);
-  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [autoRefresh, setAutoRefresh] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterBy, setFilterBy] = useState('all');
   const [sortBy, setSortBy] = useState('followers');
@@ -87,8 +91,11 @@ const SplitPanelDashboard: React.FC = () => {
   const [previousRankings, setPreviousRankings] = useState<Map<string, number>>(new Map());
   const [timeRange, setTimeRange] = useState<'1Y' | '2Y' | '3Y' | '5Y'>('5Y');
 
+  // WebSocket connection for real-time updates
+  const { isConnected, lastMessage } = useWebSocket('ws://localhost:8000/ws');
+
   // Generate impressive growth data for selected profile
-  const generateProfileGrowthData = (profile: Profile | null): GrowthData[] => {
+  const generateProfileGrowthData = useCallback((profile: Profile | null): GrowthData[] => {
     if (!profile) return [];
     
     const data: GrowthData[] = [];
@@ -105,7 +112,6 @@ const SplitPanelDashboard: React.FC = () => {
       
       // Simulate realistic long-term growth patterns
       const baseFollowers = profile.followers_count / 1000000; // Convert to millions
-      const baseEngagement = profile.engagement_rate;
       
       // Create impressive growth trends
       const monthsAgo = totalMonths - 1 - i;
@@ -125,28 +131,28 @@ const SplitPanelDashboard: React.FC = () => {
       const randomVariation = (Math.random() - 0.5) * 0.02;
       
       // Calculate current followers (going backwards from current count)
-      const currentFollowers = baseFollowers * exponentialGrowth * (1 + seasonalVariation + randomVariation);
+      let currentFollowers = baseFollowers * exponentialGrowth * (1 + seasonalVariation + randomVariation);
       
-      // Engagement tends to decrease as follower count grows (more realistic)
-      const engagementDecline = Math.max(0.3, 1 - (timeFactor * 0.25)); // Max 25% decline over time
-      const currentEngagement = baseEngagement * engagementDecline * (1 + (Math.random() - 0.5) * 0.06);
+      // Ensure the most recent point (i === 0) matches the exact current followers count
+      if (i === 0) {
+        currentFollowers = baseFollowers; // Exact current count for the most recent point
+      }
       
       data.push({
         date: date.toISOString().split('T')[0],
-        followers: Math.max(0, currentFollowers),
-        engagement: Math.max(0.1, currentEngagement)
+        followers: Math.max(0, currentFollowers)
       });
     }
     
     return data;
-  };
+  }, [timeRange]);
 
   const selectedProfileGrowthData = useMemo(() => 
-    generateProfileGrowthData(selectedProfile), [selectedProfile, timeRange]
+    generateProfileGrowthData(selectedProfile), [selectedProfile, generateProfileGrowthData]
   );
 
   // Fetch profiles
-  const fetchProfiles = async () => {
+  const fetchProfiles = useCallback(async () => {
     try {
       const response = await fetch('http://localhost:8000/api/profiles/');
       const data = await response.json();
@@ -159,17 +165,12 @@ const SplitPanelDashboard: React.FC = () => {
       });
       setPreviousRankings(newRankings);
       
-      // Auto-select first profile if none selected
-      if (!selectedProfile && data.length > 0) {
-        setSelectedProfile(data[0]);
-      }
-      
       setLoading(false);
     } catch (error) {
       console.error('Error fetching profiles:', error);
       setLoading(false);
     }
-  };
+  }, []); // Remove selectedProfile dependency
 
   // Add new profile
   const addProfile = async () => {
@@ -225,14 +226,13 @@ const SplitPanelDashboard: React.FC = () => {
   // Export data
   const exportData = () => {
     const csvContent = [
-      ['Username', 'Profile Name', 'Followers', 'Following', 'Posts', 'Engagement Rate', 'Last Updated'],
+      ['Username', 'Profile Name', 'Followers', 'Following', 'Posts', 'Last Updated'],
       ...profiles.map(profile => [
         profile.username,
         profile.profile_name || '',
         profile.followers_count.toString(),
         profile.following_count.toString(),
         profile.posts_count.toString(),
-        `${profile.engagement_rate.toFixed(2)}%`,
         profile.last_updated
       ])
     ].map(row => row.join(',')).join('\n');
@@ -287,10 +287,6 @@ const SplitPanelDashboard: React.FC = () => {
           aValue = a.posts_count;
           bValue = b.posts_count;
           break;
-        case 'engagement':
-          aValue = a.engagement_rate;
-          bValue = b.engagement_rate;
-          break;
       }
       
       return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
@@ -299,66 +295,82 @@ const SplitPanelDashboard: React.FC = () => {
 
   useEffect(() => {
     fetchProfiles();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
 
   useEffect(() => {
     if (!autoRefresh) return;
     
-    const interval = setInterval(fetchProfiles, 30000); // Refresh every 30 seconds
+    const interval = setInterval(() => {
+      fetchProfiles();
+    }, 30000); // Refresh every 30 seconds
     return () => clearInterval(interval);
-  }, [autoRefresh]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoRefresh]); // Only depend on autoRefresh
 
-  // Add some test profiles to verify profile pictures work
+  // Handle WebSocket messages
   useEffect(() => {
-    if (profiles.length === 0) {
-      const testProfiles: Profile[] = [
-        {
-          id: 1,
-          username: 'cristiano',
-          profile_name: 'Cristiano Ronaldo',
-          followers_count: 664800000,
-          following_count: 612,
-          posts_count: 3943,
-          engagement_rate: 8.2,
-          bio: 'Footballer | CR7 | Al Nassr | Portugal',
-          profile_pic_url: '',
-          is_verified: 1,
-          is_private: 0,
-          last_updated: '2024-12-30T14:03:00Z'
-        },
-        {
-          id: 2,
-          username: 'leomessi',
-          profile_name: 'Leo Messi',
-          followers_count: 520000000,
-          following_count: 289,
-          posts_count: 1024,
-          engagement_rate: 7.8,
-          bio: 'Footballer | PSG | Argentina | World Cup Winner',
-          profile_pic_url: '',
-          is_verified: 1,
-          is_private: 0,
-          last_updated: '2024-12-30T14:03:00Z'
-        },
-        {
-          id: 3,
-          username: 'virat.kohli',
-          profile_name: 'Virat Kohli',
-          followers_count: 273000000,
-          following_count: 284,
-          posts_count: 1038,
-          engagement_rate: 6.5,
-          bio: 'Cricketer | RCB | India | Former Captain',
-          profile_pic_url: '',
-          is_verified: 1,
-          is_private: 0,
-          last_updated: '2024-12-30T14:03:00Z'
+    if (lastMessage) {
+      if (lastMessage.type === 'initial') {
+        // Handle initial data - only update if there's actual data
+        const initialProfiles: Profile[] = [];
+        Object.values(lastMessage.data || {}).forEach((profileData: any) => {
+          const profile: Profile = {
+            id: Math.abs(profileData.username.split('').reduce((a: number, b: string) => a + b.charCodeAt(0), 0)) % 1000000,
+            username: profileData.username,
+            profile_name: profileData.display_name,
+            followers_count: profileData.followers || 0,
+            following_count: profileData.following || 0,
+            posts_count: profileData.posts || 0,
+            bio: profileData.bio,
+            profile_pic_url: '',
+            is_verified: 0,
+            is_private: 0,
+            last_updated: profileData.fetched_at || new Date().toISOString()
+          };
+          initialProfiles.push(profile);
+        });
+        
+        // Only update profiles if we have actual data, don't clear existing profiles
+        if (initialProfiles.length > 0) {
+          setProfiles(initialProfiles);
+          if (!selectedProfile) {
+            setSelectedProfile(initialProfiles[0]);
+          }
         }
-      ];
-      setProfiles(testProfiles);
-      setSelectedProfile(testProfiles[0]);
+      } else if (lastMessage.type === 'update') {
+        // Handle real-time updates
+        const updatedProfile: Profile = {
+          id: Math.abs(lastMessage.username!.split('').reduce((a: number, b: string) => a + b.charCodeAt(0), 0)) % 1000000,
+          username: lastMessage.username!,
+          profile_name: lastMessage.snapshot?.display_name,
+          followers_count: lastMessage.snapshot?.followers || 0,
+          following_count: lastMessage.snapshot?.following || 0,
+          posts_count: lastMessage.snapshot?.posts || 0,
+          bio: lastMessage.snapshot?.bio,
+          profile_pic_url: '',
+          is_verified: 0,
+          is_private: 0,
+          last_updated: lastMessage.snapshot?.fetched_at || new Date().toISOString()
+        };
+        
+        setProfiles(prev => {
+          const updated = prev.map(p => p.username === updatedProfile.username ? updatedProfile : p);
+          if (!prev.find(p => p.username === updatedProfile.username)) {
+            updated.push(updatedProfile);
+          }
+          return updated;
+        });
+        
+        // Update selected profile if it's the one being updated
+        if (selectedProfile?.username === updatedProfile.username) {
+          setSelectedProfile(updatedProfile);
+        }
+      }
     }
-  }, [profiles.length]);
+  }, [lastMessage, selectedProfile]);
+
+  // Removed automatic test profile loading - profiles will be loaded from API
 
   return (
     <div className="min-h-screen bg-[#0f1419] text-white font-['Inter']">
@@ -394,6 +406,14 @@ const SplitPanelDashboard: React.FC = () => {
             <RefreshCw className={`w-4 h-4 ${autoRefresh ? 'animate-spin' : ''}`} />
             <span className="text-sm font-medium">Auto-refresh</span>
           </motion.button>
+          
+          {/* WebSocket Status Indicator */}
+          <div className="flex items-center space-x-2">
+            <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}></div>
+            <span className="text-sm text-[#8b9bb3]">
+              {isConnected ? 'Live' : 'Offline'}
+            </span>
+          </div>
           
           <motion.button
             onClick={exportData}
@@ -486,7 +506,6 @@ const SplitPanelDashboard: React.FC = () => {
                 <option value="followers">Followers</option>
                 <option value="following">Following</option>
                 <option value="posts">Posts</option>
-                <option value="engagement">Engagement</option>
               </select>
               
               <motion.button
@@ -533,11 +552,11 @@ const SplitPanelDashboard: React.FC = () => {
                               className="w-8 h-8 rounded-full border-2 border-[#243447] object-cover"
                               onError={(e) => handleImageError(e, profile.username)}
                             />
-                            {profile.is_verified && (
+                            {profile.is_verified ? (
                               <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#0f1419] border border-[#00d9ff] rounded-full flex items-center justify-center">
                                 <span className="text-[#00d9ff] text-xs">✓</span>
                               </div>
-                            )}
+                            ) : null}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center space-x-2">
@@ -597,11 +616,11 @@ const SplitPanelDashboard: React.FC = () => {
                   <div className="flex-1">
                     <div className="flex items-center space-x-2">
                       <h2 className="text-2xl font-bold text-white">@{selectedProfile.username}</h2>
-                      {selectedProfile.is_verified && (
+                      {selectedProfile.is_verified ? (
                         <div className="w-6 h-6 bg-[#0f1419] border border-[#00d9ff] rounded-full flex items-center justify-center">
                           <span className="text-[#00d9ff] text-sm">✓</span>
                         </div>
-                      )}
+                      ) : null}
                     </div>
                     {selectedProfile.profile_name && (
                       <p className="text-[#8b9bb3] text-lg">{selectedProfile.profile_name}</p>
@@ -631,7 +650,7 @@ const SplitPanelDashboard: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <motion.div 
                     className="bg-[#1a2332]/60 backdrop-blur-sm rounded-xl p-4 border border-[#243447]/50 relative overflow-hidden"
                     whileHover={{ y: -2, boxShadow: '0 8px 32px rgba(0, 217, 255, 0.1)' }}
@@ -659,7 +678,7 @@ const SplitPanelDashboard: React.FC = () => {
                       <div>
                         <p className="text-[#8b9bb3] text-sm font-medium mb-1">Following</p>
                         <p className="text-2xl font-bold text-white">
-                          {formatNumber(selectedProfile.following_count)}
+                          {formatFollowingCount(selectedProfile.following_count)}
                         </p>
                       </div>
                       <UserCheck className="w-8 h-8 text-[#00d9ff]" />
@@ -683,22 +702,6 @@ const SplitPanelDashboard: React.FC = () => {
                     </div>
                   </motion.div>
 
-                  <motion.div 
-                    className="bg-[#1a2332]/60 backdrop-blur-sm rounded-xl p-4 border border-[#243447]/50 relative overflow-hidden"
-                    whileHover={{ y: -2, boxShadow: '0 8px 32px rgba(0, 217, 255, 0.1)' }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
-                    <div className="flex items-center justify-between relative z-10">
-                      <div>
-                        <p className="text-[#8b9bb3] text-sm font-medium mb-1">Engagement</p>
-                        <p className="text-2xl font-bold text-[#00ff88]">
-                          {selectedProfile.engagement_rate.toFixed(1)}%
-                        </p>
-                      </div>
-                      <BarChart3 className="w-8 h-8 text-[#00ff88]" />
-                    </div>
-                  </motion.div>
                 </div>
               </motion.div>
 
@@ -740,10 +743,6 @@ const SplitPanelDashboard: React.FC = () => {
                           <div className="w-3 h-3 bg-[#00d9ff] rounded-full"></div>
                           <span>Followers</span>
                         </div>
-                        <div className="flex items-center space-x-2">
-                          <div className="w-3 h-3 bg-[#00ff88] rounded-full"></div>
-                          <span>Engagement</span>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -756,10 +755,6 @@ const SplitPanelDashboard: React.FC = () => {
                           <linearGradient id="colorFollowers" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#00d9ff" stopOpacity={0.3}/>
                             <stop offset="95%" stopColor="#00d9ff" stopOpacity={0}/>
-                          </linearGradient>
-                          <linearGradient id="colorEngagement" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#00ff88" stopOpacity={0.3}/>
-                            <stop offset="95%" stopColor="#00ff88" stopOpacity={0}/>
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#243447" />
@@ -782,8 +777,7 @@ const SplitPanelDashboard: React.FC = () => {
                           }}
                           labelFormatter={(value) => new Date(value).toLocaleDateString()}
                           formatter={(value: number, name: string) => {
-                            if (name === 'followers') return [`${value.toFixed(2)}M followers`, 'Followers'];
-                            return [`${value.toFixed(1)}%`, 'Engagement Rate'];
+                            return [`${value.toFixed(2)}M followers`, 'Followers'];
                           }}
                         />
                         <Area 
@@ -793,14 +787,6 @@ const SplitPanelDashboard: React.FC = () => {
                           strokeWidth={3}
                           fill="url(#colorFollowers)"
                           name="Followers"
-                        />
-                        <Area 
-                          type="monotone" 
-                          dataKey="engagement" 
-                          stroke="#00ff88" 
-                          strokeWidth={3}
-                          fill="url(#colorEngagement)"
-                          name="Engagement"
                         />
                       </AreaChart>
                     </ResponsiveContainer>
