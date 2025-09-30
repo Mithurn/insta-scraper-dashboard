@@ -1,12 +1,38 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 import os
-from scraper.advanced_production_scraper import AdvancedProductionScraper
+import json
+import asyncio
+from scraper.playwright_scraper import InstagramScraper
 
 # Simple in-memory storage for demo purposes
 profiles_db = []
+
+# WebSocket connection manager
+class ConnectionManager:
+    def __init__(self):
+        self.active_connections: List[WebSocket] = []
+
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+
+    def disconnect(self, websocket: WebSocket):
+        self.active_connections.remove(websocket)
+
+    async def send_personal_message(self, message: str, websocket: WebSocket):
+        await websocket.send_text(message)
+
+    async def broadcast(self, message: str):
+        for connection in self.active_connections:
+            try:
+                await connection.send_text(message)
+            except:
+                pass
+
+manager = ConnectionManager()
 
 class Profile(BaseModel):
     id: int
@@ -15,7 +41,6 @@ class Profile(BaseModel):
     followers_count: int = 0
     following_count: int = 0
     posts_count: int = 0
-    engagement_rate: float = 0.0
     bio: Optional[str] = None
     profile_pic_url: Optional[str] = None
     is_verified: int = 0
@@ -29,7 +54,6 @@ class ProfileRanking(BaseModel):
     followers_count: int
     following_count: int
     posts_count: int
-    engagement_rate: float
     is_verified: int
     is_private: int = 0
     last_updated: str
@@ -57,17 +81,61 @@ async def root():
 async def health_check():
     return {"status": "healthy", "service": "instagram-analytics-api"}
 
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        # Send initial data
+        initial_data = {
+            "type": "initial",
+            "data": {},
+            "timestamp": "2024-01-01T00:00:00Z"
+        }
+        await manager.send_personal_message(json.dumps(initial_data), websocket)
+        
+        # Send periodic heartbeat to keep connection alive
+        while True:
+            try:
+                # Wait for client message with timeout
+                data = await asyncio.wait_for(websocket.receive_text(), timeout=30.0)
+                # Echo back
+                await manager.send_personal_message(data, websocket)
+            except asyncio.TimeoutError:
+                # Send heartbeat
+                heartbeat = {
+                    "type": "heartbeat",
+                    "timestamp": "2024-01-01T00:00:00Z"
+                }
+                await manager.send_personal_message(json.dumps(heartbeat), websocket)
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
+    except Exception as e:
+        print(f"WebSocket error: {e}")
+        manager.disconnect(websocket)
+
 @app.get("/api/profiles/", response_model=List[Profile])
 async def get_all_profiles():
     """Get all profiles"""
     return profiles_db
+
+@app.delete("/api/profiles/{username}")
+async def delete_profile(username: str):
+    """Delete a profile by username"""
+    global profiles_db
+    original_count = len(profiles_db)
+    profiles_db = [profile for profile in profiles_db if profile.username != username]
+    
+    if len(profiles_db) < original_count:
+        return {"success": True, "message": f"Profile {username} deleted successfully"}
+    else:
+        raise HTTPException(status_code=404, detail=f"Profile {username} not found")
 
 @app.get("/api/profiles/ranked", response_model=List[ProfileRanking])
 async def get_ranked_profiles(by: str = "followers_count", order: str = "desc", limit: int = 50):
     """Get profiles ranked by specified metric"""
     
     # Validate sort column
-    valid_columns = ["followers_count", "following_count", "posts_count", "engagement_rate"]
+    valid_columns = ["followers_count", "following_count", "posts_count"]
     if by not in valid_columns:
         raise HTTPException(status_code=400, detail=f"Invalid sort column. Must be one of: {valid_columns}")
     
@@ -84,7 +152,6 @@ async def get_ranked_profiles(by: str = "followers_count", order: str = "desc", 
             followers_count=profile.followers_count,
             following_count=profile.following_count,
             posts_count=profile.posts_count,
-            engagement_rate=profile.engagement_rate,
             is_verified=profile.is_verified,
             is_private=profile.is_private,
             last_updated=profile.last_updated
@@ -110,17 +177,16 @@ async def create_profile(profile: Profile):
 
 @app.post("/api/scraper/profile")
 async def scrape_single_profile(request: dict):
-    """Scrape a single Instagram profile and store it"""
+    """Scrape a single Instagram profile using real Playwright scraping"""
     username = request.get("username", "").strip()
     
     if not username:
         raise HTTPException(status_code=400, detail="Username cannot be empty")
     
-    scraper = AdvancedProductionScraper()
-    
     try:
-        # Scrape the profile
-        profile_data = scraper.scrape_profile(username)
+        # Use the async scraper directly
+        async with InstagramScraper() as scraper:
+            profile_data = await scraper.scrape_profile(username)
         
         if not profile_data:
             raise HTTPException(status_code=404, detail=f"Could not find or scrape profile: {username}")
@@ -130,25 +196,30 @@ async def scrape_single_profile(request: dict):
         
         if existing_profile:
             # Update existing profile
-            for key, value in profile_data.items():
-                if key != 'username':
-                    setattr(existing_profile, key, value)
+            existing_profile.profile_name = profile_data.get('display_name', '')
+            existing_profile.followers_count = profile_data.get('followers', 0)
+            existing_profile.following_count = profile_data.get('following', 0)
+            existing_profile.posts_count = profile_data.get('posts', 0)
+            existing_profile.bio = profile_data.get('bio', '')
+            existing_profile.profile_pic_url = profile_data.get('profile_pic_url', '')
+            existing_profile.is_verified = 1 if profile_data.get('is_verified', False) else 0
+            existing_profile.is_private = 1 if profile_data.get('is_private', False) else 0
+            existing_profile.last_updated = profile_data.get('fetched_at', "2024-01-01T00:00:00")
             action = "updated"
         else:
             # Create new profile
             profile = Profile(
                 id=len(profiles_db) + 1,
                 username=profile_data['username'],
-                profile_name=profile_data.get('profile_name', ''),
-                followers_count=profile_data.get('followers_count', 0),
-                following_count=profile_data.get('following_count', 0),
-                posts_count=profile_data.get('posts_count', 0),
-                engagement_rate=profile_data.get('engagement_rate', 0.0),
+                profile_name=profile_data.get('display_name', ''),
+                followers_count=profile_data.get('followers', 0),
+                following_count=profile_data.get('following', 0),
+                posts_count=profile_data.get('posts', 0),
                 bio=profile_data.get('bio', ''),
                 profile_pic_url=profile_data.get('profile_pic_url', ''),
-                is_verified=profile_data.get('is_verified', 0),
-                is_private=profile_data.get('is_private', 0),
-                last_updated="2024-01-01T00:00:00"
+                is_verified=1 if profile_data.get('is_verified', False) else 0,
+                is_private=1 if profile_data.get('is_private', False) else 0,
+                last_updated=profile_data.get('fetched_at', "2024-01-01T00:00:00")
             )
             profiles_db.append(profile)
             action = "created"
@@ -157,7 +228,7 @@ async def scrape_single_profile(request: dict):
             "success": True,
             "action": action,
             "profile": profile_data,
-            "message": f"Profile {action} successfully"
+            "message": f"Profile {action} successfully with REAL data"
         }
         
     except HTTPException:
@@ -202,7 +273,6 @@ async def scrape_profiles_sync(request: dict):
                         followers_count=profile_data.get('followers_count', 0),
                         following_count=profile_data.get('following_count', 0),
                         posts_count=profile_data.get('posts_count', 0),
-                        engagement_rate=profile_data.get('engagement_rate', 0.0),
                         bio=profile_data.get('bio', ''),
                         profile_pic_url=profile_data.get('profile_pic_url', ''),
                         is_verified=profile_data.get('is_verified', 0),
@@ -234,7 +304,6 @@ async def get_scraper_status():
         "capabilities": [
             "Real-time Instagram profile scraping",
             "Followers/following/posts count",
-            "Engagement rate calculation",
             "Profile verification status",
             "Bio and profile picture extraction",
             "Single profile search and addition"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { motion, AnimatePresence } from 'framer-motion';
+import ProfileSelector from './ProfileSelector';
 import { 
   XAxis, 
   YAxis, 
@@ -8,7 +9,10 @@ import {
   Tooltip, 
   ResponsiveContainer,
   Area,
-  AreaChart
+  AreaChart,
+  BarChart,
+  Bar,
+  Cell
 } from 'recharts';
 import { 
   Search, 
@@ -64,8 +68,11 @@ const SplitPanelDashboard: React.FC = () => {
   };
 
   // Function to get profile picture with fallbacks
-  const getProfilePictureUrl = (username: string, fallbackUrl?: string, size: number = 32) => {
-    // Always create a beautiful gradient avatar for now
+  const getProfilePictureUrl = (username: string, profilePicUrl?: string, size: number = 32) => {
+    // Use real Instagram profile photo if available, otherwise create a beautiful gradient avatar
+    if (profilePicUrl && profilePicUrl.trim() !== '') {
+      return profilePicUrl;
+    }
     const displayName = username.replace(/[._]/g, ' ');
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=0ea5e9&color=fff&size=${size}&bold=true`;
   };
@@ -87,12 +94,31 @@ const SplitPanelDashboard: React.FC = () => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [newProfile, setNewProfile] = useState('');
   const [addingProfile, setAddingProfile] = useState(false);
+  const [showProfileSelector, setShowProfileSelector] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
   const [previousRankings, setPreviousRankings] = useState<Map<string, number>>(new Map());
   const [timeRange, setTimeRange] = useState<'1Y' | '2Y' | '3Y' | '5Y'>('5Y');
 
   // WebSocket connection for real-time updates
   const { isConnected, lastMessage } = useWebSocket('ws://localhost:8000/ws');
+
+  // Close profile selector when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (!target.closest('.profile-selector-container')) {
+        setShowProfileSelector(false);
+      }
+    };
+
+    if (showProfileSelector) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showProfileSelector]);
 
   // Generate impressive growth data for selected profile
   const generateProfileGrowthData = useCallback((profile: Profile | null): GrowthData[] => {
@@ -434,7 +460,7 @@ const SplitPanelDashboard: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none z-10"></div>
           {/* Add Profile Section */}
           <motion.div 
-            className="p-4 border-b border-[#243447]/50 relative z-20"
+            className="p-4 border-b border-[#243447]/50 relative z-5"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -462,19 +488,43 @@ const SplitPanelDashboard: React.FC = () => {
                   <ArrowUpRight className="w-4 h-4" />
                 )}
               </motion.button>
-              <motion.button
-                onClick={loadSampleProfiles}
-                className="px-3 py-2 bg-[#1a2332] hover:bg-[#243447] border border-[#243447] rounded-lg transition-all text-[#8b9bb3] hover:text-white text-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Users className="w-4 h-4" />
-              </motion.button>
+              <div className="relative profile-selector-container z-50">
+                <motion.button
+                  onClick={() => setShowProfileSelector(!showProfileSelector)}
+                  className="px-3 py-2 bg-[#1a2332] hover:bg-[#243447] border border-[#243447] rounded-lg transition-all text-[#8b9bb3] hover:text-white text-sm"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Users className="w-4 h-4" />
+                </motion.button>
+                
+                {/* Profile Selector Dropdown */}
+                {showProfileSelector && (
+                  <>
+                    {/* Backdrop */}
+                    <div className="fixed inset-0 z-[9998]" onClick={() => setShowProfileSelector(false)} />
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute top-full right-0 mt-2 bg-[#1a2332]/95 backdrop-blur-xl border border-[#243447]/50 rounded-lg shadow-2xl z-[9999] w-80 max-h-96 overflow-hidden"
+                    >
+                    <ProfileSelector 
+                      onProfileSelect={(profile) => {
+                        setSelectedProfile(profile);
+                        setShowProfileSelector(false);
+                      }}
+                      selectedProfile={selectedProfile}
+                    />
+                    </motion.div>
+                  </>
+                )}
+              </div>
             </div>
           </motion.div>
 
           {/* Search and Filters */}
-          <div className="p-4 border-b border-[#243447]/50 space-y-3 relative z-20">
+          <div className="p-4 border-b border-[#243447]/50 space-y-3 relative z-5">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5a6b82] w-4 h-4" />
               <input
@@ -520,7 +570,7 @@ const SplitPanelDashboard: React.FC = () => {
           </div>
 
           {/* Profile List */}
-          <div className="flex-1 overflow-y-auto relative z-20">
+          <div className="flex-1 overflow-y-auto relative z-10">
             <div className="p-4">
               <h3 className="text-sm font-medium text-[#8b9bb3] mb-3">Profiles ({filteredAndSortedProfiles.length})</h3>
               <div className="space-y-2">
@@ -798,19 +848,123 @@ const SplitPanelDashboard: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent"></div>
                     <div className="flex items-center justify-between mb-4 relative z-10">
                       <h3 className="text-lg font-bold text-white">Follower Distribution</h3>
-                      <div className="text-sm text-[#8b9bb3]">Who Dominates?</div>
-                    </div>
-                    
-                    <div className="h-[240px] relative z-10">
-                      <div className="flex items-center justify-center h-full">
-                        <div className="text-center">
-                          <div className="w-32 h-32 bg-[#243447] rounded-full flex items-center justify-center mx-auto mb-4">
-                            <BarChart3 className="w-12 h-12 text-[#8b9bb3]" />
-                          </div>
-                          <p className="text-[#8b9bb3] text-sm">Pie Chart Coming Soon</p>
-                        </div>
+                      <div className="text-sm text-[#8b9bb3]">
+                        {profiles.length > 0 ? `Top ${Math.min(profiles.length, 10)} Profiles` : 'Add Profiles to See Chart'}
                       </div>
                     </div>
+                    
+                    <div className="h-[300px] relative z-10">
+                      {profiles.length === 0 ? (
+                        <div className="flex items-center justify-center h-full">
+                          <div className="text-center">
+                            <div className="w-32 h-32 bg-[#243447] rounded-full flex items-center justify-center mx-auto mb-4">
+                              <BarChart3 className="w-12 h-12 text-[#8b9bb3]" />
+                            </div>
+                            <p className="text-[#8b9bb3] text-sm">Add profiles to see the distribution chart</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart
+                            data={profiles
+                              .sort((a, b) => b.followers_count - a.followers_count)
+                              .slice(0, 10)
+                              .map((profile, index) => ({
+                                name: profile.username,
+                                followers: profile.followers_count,
+                                rank: index + 1,
+                                isVerified: profile.is_verified === 1,
+                                isPrivate: profile.is_private === 1
+                              }))}
+                            margin={{
+                              top: 20,
+                              right: 30,
+                              left: 20,
+                              bottom: 60,
+                            }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" stroke="#243447" />
+                            <XAxis 
+                              dataKey="name" 
+                              stroke="#5a6b82"
+                              fontSize={12}
+                              angle={-45}
+                              textAnchor="end"
+                              height={60}
+                            />
+                            <YAxis 
+                              stroke="#5a6b82"
+                              fontSize={12}
+                              tickFormatter={(value) => formatNumber(value)}
+                            />
+                            <Tooltip 
+                              content={({ active, payload, label }) => {
+                                if (active && payload && payload.length) {
+                                  const data = payload[0].payload;
+                                  return (
+                                    <div className="bg-[#1a2332] border border-[#243447] rounded-lg p-3 shadow-lg">
+                                      <div className="flex items-center space-x-2 mb-2">
+                                        <span className="text-white font-medium">#{data.rank}</span>
+                                        <span className="text-[#00d9ff] font-bold">@{data.name}</span>
+                                        {data.isVerified && <span className="text-[#00d9ff] text-sm">✓</span>}
+                                        {data.isPrivate && <span className="text-[#ff6b6b] text-sm">🔒</span>}
+                                      </div>
+                                      <div className="text-white font-bold text-lg">
+                                        {formatNumber(data.followers)} followers
+                                      </div>
+                                    </div>
+                                  );
+                                }
+                                return null;
+                              }}
+                            />
+                            <Bar 
+                              dataKey="followers" 
+                              radius={[4, 4, 0, 0]}
+                            >
+                              {profiles
+                                .sort((a, b) => b.followers_count - a.followers_count)
+                                .slice(0, 10)
+                                .map((profile, index) => {
+                                  let color = '#4a90e2'; // Default blue
+                                  if (profile.is_private === 1) color = '#ff6b6b'; // Red for private
+                                  else if (profile.is_verified === 1) color = '#00d9ff'; // Blue for verified
+                                  else if (index === 0) color = '#ffd700'; // Gold for #1
+                                  else if (index === 1) color = '#c0c0c0'; // Silver for #2
+                                  else if (index === 2) color = '#cd7f32'; // Bronze for #3
+                                  
+                                  return <Cell key={`cell-${index}`} fill={color} />;
+                                })}
+                            </Bar>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      )}
+                    </div>
+                    
+                    {profiles.length > 0 && (
+                      <div className="mt-4 flex items-center justify-center space-x-6 text-xs text-[#5a6b82] relative z-10">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-[#ffd700] rounded"></div>
+                          <span>#1</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-[#c0c0c0] rounded"></div>
+                          <span>#2</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-[#cd7f32] rounded"></div>
+                          <span>#3</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-[#00d9ff] rounded"></div>
+                          <span>Verified</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-[#ff6b6b] rounded"></div>
+                          <span>Private</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>
