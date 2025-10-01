@@ -1,4 +1,3 @@
-Build me a small project that scrapes up to 15 public Instagram profiles and displays their real-time stats on a dashboard. The frontend is already done — it just needs a WebSocket endpoint that sends live updates.  
 
 ## Requirements
 - Language: Python 3.11
@@ -50,8 +49,3 @@ Build me a small project that scrapes up to 15 public Instagram profiles and dis
    - Redis container in docker-compose
    - App should load env vars `REDIS_URL`, `POLL_INTERVAL`, `PROFILE_USERNAMES`
 
-## Output format
-- Provide the full content of each file separately, with filenames clearly marked
-- Make it so I can copy files into a folder and run `docker compose up`
-
-Now, generate the full project files.
