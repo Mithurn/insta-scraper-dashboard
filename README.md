@@ -1,4 +1,15 @@
+INSTA SIGHT
 # Instagram Public Profile Analytics Dashboard
+
+<img width="1464" height="804" alt="Screenshot 2025-10-01 at 8 47 33 PM" src="https://github.com/user-attachments/assets/ab2773fe-550d-4cc1-a2e1-8cfd3dac1cb2" />
+![Uploading Screenshot 2025-10-01 at 11.03.21 PM.png…]()
+![Uploading Screenshot 2025-10-01 at 11.04.38 PM.png…]()
+![Uploading Screenshot 2025-10-01 at 11.04.24 PM.png…]()
+![Uploading Screenshot 2025-10-01 at 11.04.14 PM.png…]()
+![Uploading Screenshot 2025-10-01 at 11.03.52 PM.png…]()
+![Uploading Screenshot 2025-10-01 at 11.03.41 PM.png…]()
+
+
 
 A full-stack web application that scrapes public Instagram profile data and presents it in a centralized, interactive dashboard with real-time rankings and filtering capabilities.
 
