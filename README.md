@@ -7,6 +7,9 @@ demo video-
 
 <img width="1464" height="775" alt="Screenshot 2025-10-01 at 11 03 41 PM" src="https://github.com/user-attachments/assets/b49b7fac-d6af-467b-95c5-5de4c1dbf23f" />
 
+<img width="1468" height="857" alt="Screenshot 2025-10-01 at 11 04 14 PM" src="https://github.com/user-attachments/assets/02f57679-79d4-42db-9232-810ca3d031eb" />
+
+
 
 <img width="1466" height="780" alt="Screenshot 2025-10-01 at 11 04 24 PM" src="https://github.com/user-attachments/assets/6d6aa92c-2915-44bb-97c4-2f48de797202" />
 
