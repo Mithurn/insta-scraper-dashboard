@@ -1,7 +1,7 @@
-INSTA SIGHT
+# INSTA SIGHT
 # Instagram Public Profile Analytics Dashboard
 
-demo video- 
+demo video - https://youtu.be/4gdbCPqycX8
 
 <img width="1465" height="774" alt="Screenshot 2025-10-01 at 11 03 21 PM" src="https://github.com/user-attachments/assets/eb2fc920-bcca-4f01-86ea-228b7947f7a7" />
 
