@@ -1,13 +1,15 @@
 INSTA SIGHT
 # Instagram Public Profile Analytics Dashboard
 
-<img width="1464" height="804" alt="Screenshot 2025-10-01 at 8 47 33 PM" src="https://github.com/user-attachments/assets/ab2773fe-550d-4cc1-a2e1-8cfd3dac1cb2" />
-![Uploading Screenshot 2025-10-01 at 11.03.21 PM.png…]()
-![Uploading Screenshot 2025-10-01 at 11.04.38 PM.png…]()
-![Uploading Screenshot 2025-10-01 at 11.04.24 PM.png…]()
-![Uploading Screenshot 2025-10-01 at 11.04.14 PM.png…]()
-![Uploading Screenshot 2025-10-01 at 11.03.52 PM.png…]()
-![Uploading Screenshot 2025-10-01 at 11.03.41 PM.png…]()
+demo video- 
+
+<img width="1465" height="774" alt="Screenshot 2025-10-01 at 11 03 21 PM" src="https://github.com/user-attachments/assets/eb2fc920-bcca-4f01-86ea-228b7947f7a7" />
+
+<img width="1464" height="775" alt="Screenshot 2025-10-01 at 11 03 41 PM" src="https://github.com/user-attachments/assets/b49b7fac-d6af-467b-95c5-5de4c1dbf23f" />
+
+
+<img width="1466" height="780" alt="Screenshot 2025-10-01 at 11 04 24 PM" src="https://github.com/user-attachments/assets/6d6aa92c-2915-44bb-97c4-2f48de797202" />
+
 
 
 
