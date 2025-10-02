@@ -1,246 +1,367 @@
-<h1 align="center" >
-    <a>
-       <img width="340" height="240" alt="insta scrape" src="https://github.com/user-attachments/assets/aae01283-8b19-4777-80e0-03da859869e7" />
-    </a>
+<h1 align="center">
+  <br>
+  <a href="#"><img src="https://img.icons8.com/fluency/96/000000/instagram-new.png" alt="Instagram Analytics" width="120"></a>
+  <br>
+  Instagram Analytics Dashboard
+  <br>
 </h1>
 
-<p align="center">
-  <i align="center"> Easy way to scrape Instagram profile data 🚀</i>
-</p>
-
+<h4 align="center">A full-stack, deployable web application that scrapes public Instagram profile data and presents it in an interactive analytics dashboard with real-time rankings and filtering capabilities.</h4>
 
 <p align="center">
-
-   <img width="1466" height="735" alt="496287537-6d6aa92c-2915-44bb-97c4-2f48de797202" src="https://github.com/user-attachments/assets/a152f0b6-be35-4eb9-bc06-c2c56c94b5c2" />
-
+  <a href="#">
+    <img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=flat-square&logo=python" alt="Python">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/React-18+-61DAFB.svg?style=flat-square&logo=react" alt="React">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Flask-2.0+-000000.svg?style=flat-square&logo=flask" alt="Flask">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/PostgreSQL-13+-336791.svg?style=flat-square&logo=postgresql" alt="PostgreSQL">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=flat-square&logo=docker" alt="Docker">
+  </a>
+  <br>
+  <a href="#">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Status-In%20Development-yellow.svg?style=flat-square" alt="Status">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Tests-Passing-brightgreen.svg?style=flat-square" alt="Tests">
+  </a>
+  <a href="https://instagram-analytics-dashboard.vercel.app">
+    <img src="https://img.shields.io/badge/Live%20Demo-Available-blue.svg?style=flat-square" alt="Live Demo">
+  </a>
 </p>
-
-
-## Introduction
-The Instagram landscape generates massive amounts of public data daily, yet extracting meaningful insights across multiple profiles remains challenging for marketers, researchers, and analysts. This system addresses that gap by creating an automated pipeline that ethically collects public Instagram profile data, processes engagement metrics, and presents comprehensive analytics through an intuitive dashboard interface.
-
-The platform transforms scattered public profile information into actionable intelligence, enabling users to track follower growth trends, analyze engagement patterns, and benchmark profile performance across their target audience segments.
-
-Key Features
-
-Intelligent Web Scraping: Ethical extraction of public Instagram profile data with anti-detection mechanisms
-
-Real-time Dashboard: Interactive analytics interface with live data updates every 5-10 minutes
-
-Engagement Analytics: Calculated engagement rates with historical tracking capabilities
-
-Multi-metric Ranking: Dynamic sorting by followers, engagement rate, post frequency, and growth metrics
-
-Automated Updates: Scheduled data collection with configurable refresh intervals
-
-Responsive Design: Fully functional across desktop, tablet, and mobile devices
-
-RESTful API: Complete backend API for integration with external tools
-
-Docker Deployment: One-command setup for development and production environments
-
-
 
 <p align="center">
-   
-  ![readme](https://github.com/user-attachments/assets/ca99095c-0a14-4617-9b0a-de4c2db975b1)
-
-
+  <a href="#key-features">Key Features</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#api-documentation">API</a> •
+  <a href="#deployment">Deployment</a> •
+  <a href="#contributing">Contributing</a>
 </p>
 
+<p align="center">
+    <img width="1466" height="735" alt="Instagram Analytics Dashboard" src="https://github.com/user-attachments/assets/18535cca-5f5a-48f0-8f2c-d2653bd85fd7" />
+</p>
 
+![Dashboard Features](https://github.com/user-attachments/assets/4a1561ea-8dca-4a13-bd9a-42f896eee2ba)
 
-## Usage 
+## 🚀 Key Features
 
-To get started with Amplication, the hosted version of the product can be used. You can get started immediately at [app.amplication.com](https://app.amplication.com). After the login page, you will be guided through creating your first service. The [website](https://amplication.com) provides an overview of the application, additional information on the product and guides can be found in the [docs](https://docs.amplication.com).
+### 📊 **Comprehensive Analytics**
+- **Real-time Profile Metrics**: Track followers, following, posts count, and engagement rates
+- **Interactive Dashboard**: Sort, filter, and rank profiles by any metric
+- **Auto-refresh**: Live data updates every 5-10 minutes
+- **Historical Tracking**: Monitor growth trends over time
 
-<details>
-<summary>
-  Tutorials
-</summary> <br />
+### 🔍 **Advanced Scraping Engine**
+- **Anti-Detection**: Randomized delays, User-Agent rotation, and proxy support
+- **Robust Error Handling**: Graceful handling of private profiles and missing data
+- **Scalable Architecture**: Process multiple profiles simultaneously
+- **Scheduled Updates**: Automated daily data collection
 
-- [To-do application using Amplication and Angular](https://docs.amplication.com/tutorials/angular-todos)
-- [To-do application using Amplication and React](https://docs.amplication.com/tutorials/react-todos)
-</details>
+### 🎨 **Modern UI/UX**
+- **Responsive Design**: Beautiful interface across all devices
+- **Dark/Light Mode**: Customizable themes
+- **Interactive Elements**: Smooth transitions and loading indicators
+- **Data Visualization**: Charts and graphs for trend analysis
 
-## Development
+### 🏗️ **Production Ready**
+- **Dockerized**: Complete containerization with docker-compose
+- **RESTful API**: Well-documented endpoints
+- **Database Optimization**: Efficient schema design
+- **CI/CD Ready**: Automated testing and deployment
 
-Alternatively, instead of using the hosted version of the product, Amplication can be run locally for code generation purposes or contributions - if so, please refer to our [contributing](#contributing_anchor) section.
+## 🛠️ Technical Stack
 
-<details open>
-<summary>
-Pre-requisites
-</summary> <br />
-To be able to start development on Amplication, make sure that you have the following prerequisites installed:
+| Layer | Technology | Version | Purpose |
+|-------|------------|---------|---------|
+| **Frontend** | React | 18+ | Modern UI with hooks and functional components |
+| **Backend** | Flask | 2.0+ | Lightweight Python web framework for REST API |
+| **Database** | PostgreSQL | 13+ | Robust relational database for complex queries |
+| **Scraping** | Selenium/Playwright | Latest | JavaScript rendering for dynamic content |
+| **Containerization** | Docker | Latest | Consistent deployment across environments |
+| **Task Queue** | Celery | 5.0+ | Asynchronous task processing for scraping |
+| **ORM** | SQLAlchemy | 2.0+ | Python SQL toolkit for database operations |
 
-###
+### **Technology Justification**
 
-- Node.js
-- Docker
-- Git
-</details>
+- **React 18+**: Chosen for its component-based architecture, excellent performance with concurrent features, and vast ecosystem
+- **Flask**: Selected for its simplicity, flexibility, and perfect fit for REST API development without unnecessary overhead
+- **PostgreSQL**: Opted for its ACID compliance, advanced indexing capabilities, and excellent performance with complex analytical queries
+- **Selenium/Playwright**: Essential for handling Instagram's JavaScript-heavy interface and anti-bot measures
+- **Docker**: Ensures consistent deployment and easy scaling across different environments
 
-<details open>
-<summary>
-Running Amplication
-</summary> <br />
+## 🧠 Challenges & Solutions
 
-> **Note**
-> It is also possible to start development with GitHub Codespaces, when navigating to `< > Code`, select `Codespaces` instead of `Local`. Click on either the `+`-sign or the `Create codespace on master`-button.
+### **Challenge 1: Instagram Anti-Scraping Measures**
+**Problem**: Instagram employs sophisticated anti-bot detection including rate limiting, CAPTCHAs, and behavioral analysis.
 
-Amplication is using a monorepo architecture - powered by <a href="https://nx.dev">Nx Workspaces</a> - where multiple applications and libraries exist in a single repository. To setup a local development environment the following steps can be followed:
+**Solution**: Implemented a multi-layered approach:
+- **Randomized Delays**: Dynamic sleep intervals (2-8 seconds) between requests
+- **User-Agent Rotation**: Pool of realistic browser user agents
+- **Session Management**: Proper cookie handling and session persistence
+- **Proxy Integration**: Optional proxy rotation for IP diversity
+- **Request Headers**: Mimicking real browser behavior with proper headers
 
-**BEFORE** you run the following steps make sure:
-1. You have typescript installed locally on you machine ```npm install -g typescript```
-2. You are using a supported node version (check `engines` `node` in the [package.json](./package.json))
-3. You are using a supported npm version (check `engines` `npm` in the [package.json](./package.json))
-4. You have `docker` installed and running on your machine
+### **Challenge 2: Scalable Data Processing**
+**Problem**: Processing hundreds of profiles efficiently while maintaining data consistency and handling failures gracefully.
 
+**Solution**: Built a robust architecture:
+- **Celery Task Queue**: Asynchronous processing with Redis backend
+- **Database Connection Pooling**: Optimized connection management
+- **Retry Logic**: Exponential backoff for failed requests
+- **Data Validation**: Comprehensive input validation and error handling
+- **Batch Processing**: Efficient bulk operations for database updates
 
-1. Clone the repository and install dependencies:
-```shell
-git clone https://github.com/amplication/amplication.git && cd amplication && npm install
+## 🏛️ Architecture
+
+```mermaid
+graph TB
+    A[Frontend - React] --> B[Backend API - Flask]
+    B --> C[Database - PostgreSQL]
+    D[Scraper - Python] --> C
+    E[Scheduler] --> D
+    F[Docker Compose] --> A
+    F --> B
+    F --> C
+    F --> D
 ```
 
-2. Run the setup script, which takes care of installing dependencies, building packages, and setting up the workspace:
-```shell
-npm run setup:dev
+### **Technology Stack**
+- **Frontend**: React 18+ with modern UI components
+- **Backend**: Flask REST API with SQLAlchemy ORM
+- **Database**: PostgreSQL with optimized schema
+- **Scraping**: Python with Selenium/Playwright for JavaScript rendering
+- **Deployment**: Docker containers with docker-compose
+- **Scheduling**: Background tasks for automated data collection
+
+## 📦 Installation
+
+### Prerequisites
+- Python 3.8+
+- Node.js 16+
+- Docker & Docker Compose
+- PostgreSQL 13+ (optional for local development)
+
+### Quick Start with Docker
+
+```bash
+# Clone the repository
+git clone https://github.com/Mithurn/instagram-analytics-dashboard.git
+cd instagram-analytics-dashboard
+
+# Start all services
+docker-compose up -d
+
+# The application will be available at:
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:5000
 ```
 
-3. Option 1: Running the required infrastructure - view infrastructure component logs
+### Manual Installation
 
+```bash
+# Backend Setup
+cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
 
-```shell
-npm run docker:dev
-```
-3. Option 2: Running the required infrastructure - run the infrastructure components in background
-```shell
-npm run docker:dev -- -d
-```
-
-4. Apply database migrations
-```shell
-npm run db:migrate:deploy
-```
-
-5. To start developing, run one or more of the applications available under `serve:[application]` scripts of the package.json.
-
-```shell
-# running the server component
-npm run serve:server
-
-# running the client component
-npm run serve:client
-
-# running the data-service-generator component
-npm run serve:dsg
-
-# running the git-sync-manager component
-npm run serve:git
-
-# running the plugin-api component
-npm run serve:plugins
+# Frontend Setup (in a new terminal)
+cd frontend
+npm install
+npm start
 ```
 
-> **Note**
-> In order to run the Amplication client properly, both the client and server need to be started by the `npm run serve:[application]` command, as well as an additional component for development on a specific component.
+### Environment Setup
 
-The development environment should now be set up. Additional information on the different application components can be found under packages/`[application]`/README.md file. Happy hacking! 👾
-</details>
+Create a `.env` file in the root directory with the following variables:
 
-## Resources
+```bash
+# Database Configuration
+DATABASE_URL=postgresql://username:password@localhost:5432/instagram_analytics
+REDIS_URL=redis://localhost:6379/0
 
-- **[Website](https://amplication.com)** overview of the product.
-- **[Docs](https://docs.amplication.com)** for comprehensive documentation.
-- **[Blog](https://amplication.com/blog)** for guides and technical comparisons.
-- **[Discord](https://amplication.com/discord)** for support and discussions with the community and the team.
-- **[GitHub](https://github.com/amplication/amplication)** for source code, project board, issues, and pull requests.
-- **[Twitter](https://twitter.com/amplication)** for the latest updates on the product and published blogs.
-- **[YouTube](https://www.youtube.com/c/Amplicationcom)** for guides and technical talks.
+# Instagram Scraping Configuration
+INSTAGRAM_DELAY_MIN=2
+INSTAGRAM_DELAY_MAX=8
+INSTAGRAM_MAX_RETRIES=3
+INSTAGRAM_TIMEOUT=30
 
-<a name="contributing_anchor"></a>
-## Contributing
+# API Configuration
+FLASK_ENV=development
+FLASK_DEBUG=True
+SECRET_KEY=your-secret-key-here
 
-The majority of Amplication code is open-source. We are committed to a transparent development process and highly appreciate any contributions. Whether you are helping us fix bugs, proposing new features, improving our documentation or spreading the word - we would love to have you as a part of the Amplication community. Please refer to our [contribution guidelines](./CONTRIBUTING.md) and [code of conduct](./CODE_OF_CONDUCT.md).
+# Optional: Proxy Configuration
+PROXY_ENABLED=False
+PROXY_LIST=http://proxy1:port,http://proxy2:port
 
-- Bug Report: If you see an error message or encounter an issue while using Amplication, please create a [bug report](https://github.com/amplication/amplication/issues/new?assignees=&labels=type%3A+bug&template=bug.yaml&title=%F0%9F%90%9B+Bug+Report%3A+).
+# Optional: Email Configuration (for notifications)
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+```
 
-- Feature Request: If you have an idea or if there is a capability that is missing and would make development easier and more robust, please submit a [feature request](https://github.com/amplication/amplication/issues/new?assignees=&labels=type%3A+feature+request&template=feature.yml).
+**Important**: Replace placeholder values with your actual configuration. Never commit the `.env` file to version control.
 
-- Documentation Request: If you're reading the Amplication docs and feel like you're missing something, please submit a [documentation request](https://github.com/amplication/amplication/issues/new?assignees=&labels=type%3A+docs&template=documentation-request.yaml&title=%F0%9F%93%96+Documentation%3A+).
+## 🎯 Usage
 
-Not sure where to start? Join our discord and we will help you get started!
+### Adding Profiles to Track
 
-<a href="https://amplication.com/discord"><img src="https://amplication.com/images/discord_banner_purple.svg" /></a>
+1. **Via Dashboard**: Use the web interface to add Instagram usernames
+2. **Via API**: POST to `/api/profiles/update` with a list of usernames
+3. **Via Config**: Add profiles to the configuration file
 
-## Contributors
+### Dashboard Features
 
-<!---
-npx contributor-faces --exclude "*bot*" --limit 70 --repo "https://github.com/amplication/amplication"
+- **📈 Rankings**: View profiles ranked by followers, engagement, or growth
+- **🔍 Search & Filter**: Find specific profiles or filter by criteria
+- **📊 Analytics**: Detailed metrics and trend analysis
+- **⚡ Real-time Updates**: Automatic data refresh
 
-change the height and width for each of the contributors from 80 to 50.
---->
+### API Endpoints
 
-[//]: contributor-faces
-<a href="https://github.com/yuval-hazaz"><img src="https://avatars.githubusercontent.com/u/43705455?v=4" title="yuval-hazaz" width="50" height="50"></a>
-<a href="https://github.com/iddan"><img src="https://avatars.githubusercontent.com/u/12671072?v=4" title="iddan" width="50" height="50"></a>
-<a href="https://github.com/tupe12334"><img src="https://avatars.githubusercontent.com/u/61761153?v=4" title="tupe12334" width="50" height="50"></a>
-<a href="https://github.com/abrl91"><img src="https://avatars.githubusercontent.com/u/39680385?v=4" title="abrl91" width="50" height="50"></a>
-<a href="https://github.com/morhag90"><img src="https://avatars.githubusercontent.com/u/97830649?v=4" title="morhag90" width="50" height="50"></a>
-<a href="https://github.com/arielweinberger"><img src="https://avatars.githubusercontent.com/u/4976416?v=4" title="arielweinberger" width="50" height="50"></a>
-<a href="https://github.com/EugeneTseitlin"><img src="https://avatars.githubusercontent.com/u/6080188?v=4" title="EugeneTseitlin" width="50" height="50"></a>
-<a href="https://github.com/mshidlov"><img src="https://avatars.githubusercontent.com/u/91742238?v=4" title="mshidlov" width="50" height="50"></a>
-<a href="https://github.com/barshimi"><img src="https://avatars.githubusercontent.com/u/4712526?v=4" title="barshimi" width="50" height="50"></a>
-<a href="https://github.com/overbit"><img src="https://avatars.githubusercontent.com/u/2861984?v=4" title="overbit" width="50" height="50"></a>
-<a href="https://github.com/germanilia"><img src="https://avatars.githubusercontent.com/u/34738985?v=4" title="germanilia" width="50" height="50"></a>
-<a href="https://github.com/shaharblanksela"><img src="https://avatars.githubusercontent.com/u/91251849?v=4" title="shaharblanksela" width="50" height="50"></a>
-<a href="https://github.com/GalCegla"><img src="https://avatars.githubusercontent.com/u/62651890?v=4" title="GalCegla" width="50" height="50"></a>
-<a href="https://github.com/belkind27"><img src="https://avatars.githubusercontent.com/u/71218434?v=4" title="belkind27" width="50" height="50"></a>
-<a href="https://github.com/levivannoort"><img src="https://avatars.githubusercontent.com/u/73097785?v=4" title="levivannoort" width="50" height="50"></a>
-<a href="https://github.com/jainpawan21"><img src="https://avatars.githubusercontent.com/u/39362422?v=4" title="jainpawan21" width="50" height="50"></a>
-<a href="https://github.com/g-traub"><img src="https://avatars.githubusercontent.com/u/33841027?v=4" title="g-traub" width="50" height="50"></a>
-<a href="https://github.com/lalit8347"><img src="https://avatars.githubusercontent.com/u/74647848?v=4" title="lalit8347" width="50" height="50"></a>
-<a href="https://github.com/alonram"><img src="https://avatars.githubusercontent.com/u/40050499?v=4" title="alonram" width="50" height="50"></a>
-<a href="https://github.com/muhsinkamil"><img src="https://avatars.githubusercontent.com/u/62111075?v=4" title="muhsinkamil" width="50" height="50"></a>
-<a href="https://github.com/lokeswaran-aj"><img src="https://avatars.githubusercontent.com/u/74011196?v=4" title="lokeswaran-aj" width="50" height="50"></a>
-<a href="https://github.com/meeroslava"><img src="https://avatars.githubusercontent.com/u/20791516?v=4" title="meeroslava" width="50" height="50"></a>
-<a href="https://github.com/udanna"><img src="https://avatars.githubusercontent.com/u/8627181?v=4" title="udanna" width="50" height="50"></a>
-<a href="https://github.com/CKanishka"><img src="https://avatars.githubusercontent.com/u/30779692?v=4" title="CKanishka" width="50" height="50"></a>
-<a href="https://github.com/gitstart"><img src="https://avatars.githubusercontent.com/u/1501599?v=4" title="gitstart" width="50" height="50"></a>
-<a href="https://github.com/almogbhl"><img src="https://avatars.githubusercontent.com/u/32982671?v=4" title="almogbhl" width="50" height="50"></a>
-<a href="https://github.com/chaiwattsw"><img src="https://avatars.githubusercontent.com/u/30198386?v=4" title="chaiwattsw" width="50" height="50"></a>
-<a href="https://github.com/astitva0011"><img src="https://avatars.githubusercontent.com/u/113434018?v=4" title="astitva0011" width="50" height="50"></a>
-<a href="https://github.com/kalmanl"><img src="https://avatars.githubusercontent.com/u/9283404?v=4" title="kalmanl" width="50" height="50"></a>
-<a href="https://github.com/akshay-bharadva"><img src="https://avatars.githubusercontent.com/u/52954931?v=4" title="akshay-bharadva" width="50" height="50"></a>
-<a href="https://github.com/souravjain540"><img src="https://avatars.githubusercontent.com/u/53312820?v=4" title="souravjain540" width="50" height="50"></a>
-<a href="https://github.com/MoFoGo"><img src="https://avatars.githubusercontent.com/u/96979533?v=4" title="MoFoGo" width="50" height="50"></a>
-<a href="https://github.com/molaycule"><img src="https://avatars.githubusercontent.com/u/20028628?v=4" title="molaycule" width="50" height="50"></a>
-<a href="https://github.com/theamanbhargava"><img src="https://avatars.githubusercontent.com/u/23207069?v=4" title="theamanbhargava" width="50" height="50"></a>
-<a href="https://github.com/MichaelSolati"><img src="https://avatars.githubusercontent.com/u/11811422?v=4" title="MichaelSolati" width="50" height="50"></a>
-<a href="https://github.com/b4s36t4"><img src="https://avatars.githubusercontent.com/u/59088937?v=4" title="b4s36t4" width="50" height="50"></a>
-<a href="https://github.com/gabimoncha"><img src="https://avatars.githubusercontent.com/u/39256258?v=4" title="gabimoncha" width="50" height="50"></a>
-<a href="https://github.com/ShabanaNaik"><img src="https://avatars.githubusercontent.com/u/76608039?v=4" title="ShabanaNaik" width="50" height="50"></a>
-<a href="https://github.com/Spid3rrr"><img src="https://avatars.githubusercontent.com/u/38404399?v=4" title="Spid3rrr" width="50" height="50"></a>
-<a href="https://github.com/mulygottlieb"><img src="https://avatars.githubusercontent.com/u/1912933?v=4" title="mulygottlieb" width="50" height="50"></a>
-<a href="https://github.com/TheLearneer"><img src="https://avatars.githubusercontent.com/u/23402178?v=4" title="TheLearneer" width="50" height="50"></a>
-<a href="https://github.com/wiseaidev"><img src="https://avatars.githubusercontent.com/u/62179149?v=4" title="wiseaidev" width="50" height="50"></a>
-<a href="https://github.com/VoidCupboard"><img src="https://avatars.githubusercontent.com/u/82395440?v=4" title="VoidCupboard" width="50" height="50"></a>
-<a href="https://github.com/kabhamo"><img src="https://avatars.githubusercontent.com/u/74118584?v=4" title="kabhamo" width="50" height="50"></a>
-<a href="https://github.com/michizhou"><img src="https://avatars.githubusercontent.com/u/33012425?v=4" title="michizhou" width="50" height="50"></a>
-<a href="https://github.com/Himanxu1"><img src="https://avatars.githubusercontent.com/u/80101755?v=4" title="Himanxu1" width="50" height="50"></a>
-<a href="https://github.com/ahlavorato"><img src="https://avatars.githubusercontent.com/u/114295834?v=4" title="ahlavorato" width="50" height="50"></a>
-<a href="https://github.com/munyoudoum"><img src="https://avatars.githubusercontent.com/u/60089135?v=4" title="munyoudoum" width="50" height="50"></a>
-<a href="https://github.com/rkshaw20"><img src="https://avatars.githubusercontent.com/u/73245914?v=4" title="rkshaw20" width="50" height="50"></a>
-<a href="https://github.com/yonantan"><img src="https://avatars.githubusercontent.com/u/9935021?v=4" title="yonantan" width="50" height="50"></a>
-<a href="https://github.com/alexbass86"><img src="https://avatars.githubusercontent.com/u/96179897?v=4" title="alexbass86" width="50" height="50"></a>
-<a href="https://github.com/jatinparmar96"><img src="https://avatars.githubusercontent.com/u/15108177?v=4" title="jatinparmar96" width="50" height="50"></a>
-<a href="https://github.com/AllMikeNoIke"><img src="https://avatars.githubusercontent.com/u/20914059?v=4" title="AllMikeNoIke" width="50" height="50"></a>
-<a href="https://github.com/ilovetensor"><img src="https://avatars.githubusercontent.com/u/96976448?v=4" title="ilovetensor" width="50" height="50"></a>
-<a href="https://github.com/asharonbaltazar"><img src="https://avatars.githubusercontent.com/u/58940073?v=4" title="asharonbaltazar" width="50" height="50"></a>
-<a href="https://github.com/goingdust"><img src="https://avatars.githubusercontent.com/u/87334449?v=4" title="goingdust" width="50" height="50"></a>
+```bash
+# Get all profiles
+GET /api/profiles
 
-[//]: contributor-faces
+# Get ranked profiles
+GET /api/profiles/ranked?by=followers
 
-## License
+# Get specific profile
+GET /api/profiles/{username}
 
-A large part of this project is licensed under the [Apache 2.0](./LICENSE) license. The only exception are the components under the `ee` (enterprise edition) directory, these are licensed under the [Amplication Enterprise Edition](./ee/LICENSE) license.
+# Update profiles
+POST /api/profiles/update
+```
+
+## 🐳 Deployment
+
+### Docker Deployment
+
+```bash
+# Production deployment
+docker-compose -f docker-compose.prod.yml up -d
+
+# With environment variables
+cp .env.example .env
+# Edit .env with your configuration
+docker-compose up -d
+```
+
+### Cloud Deployment
+
+The application is designed for easy deployment on:
+- **AWS**: ECS, RDS, and S3
+- **Google Cloud**: Cloud Run and Cloud SQL
+- **Heroku**: One-click deployment
+- **DigitalOcean**: App Platform
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+# Install development dependencies
+pip install -r requirements-dev.txt
+npm install --dev
+
+# Run tests
+python -m pytest
+npm test
+
+# Code formatting
+black .
+prettier --write .
+```
+
+## 📋 Project Status
+
+### ✅ Completed Phases
+- [x] **Phase 1**: Architecture & Technology Stack
+- [x] **Phase 2**: Data Collection (Scraping Layer)
+- [x] **Phase 3**: Backend & Data Storage
+- [x] **Phase 4**: Frontend Dashboard
+- [x] **Phase 5**: Deployment & Containerization
+- [x] **Phase 6**: Documentation & Best Practices
+
+## 🗺️ Roadmap & Future Features
+
+### **Phase 1: Core Enhancements** (Q1 2024)
+- [ ] **Advanced Analytics**: Machine learning-based engagement prediction
+- [ ] **Real-time Notifications**: Email/SMS alerts for significant changes
+- [ ] **Export Functionality**: PDF reports and CSV data export
+- [ ] **API Rate Limiting**: Implement proper rate limiting and authentication
+
+### **Phase 2: Scale & Performance** (Q2 2024)
+- [ ] **Microservices Architecture**: Split into independent services
+- [ ] **Caching Layer**: Redis caching for improved performance
+- [ ] **Load Balancing**: Horizontal scaling capabilities
+- [ ] **Database Sharding**: Handle millions of profiles
+
+### **Phase 3: Advanced Features** (Q3 2024)
+- [ ] **Mobile App**: React Native application
+- [ ] **AI Insights**: Automated trend analysis and recommendations
+- [ ] **Multi-Platform Support**: TikTok, Twitter, YouTube integration
+- [ ] **White-label Solution**: Customizable branding for enterprise clients
+
+### **Phase 4: Enterprise Features** (Q4 2024)
+- [ ] **Team Collaboration**: Multi-user access and permissions
+- [ ] **Advanced Reporting**: Custom dashboard creation
+- [ ] **API Marketplace**: Third-party integrations
+- [ ] **Enterprise Security**: SSO, audit logs, compliance features
+
+## ⚖️ Legal & Ethical Considerations
+
+This project is designed for **educational and personal use only**. Please ensure you:
+
+- ✅ Only scrape **publicly available** data
+- ✅ Respect Instagram's Terms of Service
+- ✅ Implement reasonable rate limiting
+- ✅ Use data responsibly and ethically
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Instagram for providing public profile data
+- Open source community for amazing libraries
+- Contributors who helped improve this project
+
+## 👨‍💻 Author & Contact
+
+**Mithurn Jeromme**  
+*Full-Stack Developer & Data Enthusiast*
+
+- 🌐 **Website**: [mithurnjeromme.vercel.app](https://mithurnjeromme.vercel.app)
+- 💼 **LinkedIn**: [linkedin.com/in/mithurn-jeromme-s-k](https://www.linkedin.com/in/mithurn-jeromme-s-k/)
+- 🐙 **GitHub**: [github.com/Mithurn](https://github.com/Mithurn)
+- 📧 **Email**: mithurnjeromme172@gmail.com
+- 🐦 **Twitter**: [@Mithurn_Jeromme](https://x.com/Mithurn_Jeromme)
+
+---
+
+<div align="center">
+
+**Built with ❤️ for the developer community**
+
+[Report Bug](https://github.com/Mithurn/instagram-analytics-dashboard/issues) • [Request Feature](https://github.com/Mithurn/instagram-analytics-dashboard/issues) • [Documentation](https://github.com/Mithurn/instagram-analytics-dashboard/wiki)
+
+</div>
