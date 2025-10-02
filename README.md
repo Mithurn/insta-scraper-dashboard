@@ -1,296 +1,235 @@
-# INSTA SIGHT
-# Instagram Public Profile Analytics Dashboard
+<h1 align="center" >
+    <a>
+       <img width="340" height="240" alt="insta scrape" src="https://github.com/user-attachments/assets/aae01283-8b19-4777-80e0-03da859869e7" />
+    </a>
+</h1>
 
-demo video - https://youtu.be/4gdbCPqycX8
-
-<img width="1465" height="774" alt="Screenshot 2025-10-01 at 11 03 21 PM" src="https://github.com/user-attachments/assets/eb2fc920-bcca-4f01-86ea-228b7947f7a7" />
-
-<img width="1464" height="775" alt="Screenshot 2025-10-01 at 11 03 41 PM" src="https://github.com/user-attachments/assets/b49b7fac-d6af-467b-95c5-5de4c1dbf23f" />
-
-<img width="1468" height="857" alt="Screenshot 2025-10-01 at 11 04 14 PM" src="https://github.com/user-attachments/assets/02f57679-79d4-42db-9232-810ca3d031eb" />
-
+<p align="center">
+  <i align="center"> Easy way to scrape Instagram profile data 🚀</i>
+</p>
 
 
-<img width="1466" height="780" alt="Screenshot 2025-10-01 at 11 04 24 PM" src="https://github.com/user-attachments/assets/6d6aa92c-2915-44bb-97c4-2f48de797202" />
+<p align="center">
+
+   <img width="1466" height="735" alt="496287537-6d6aa92c-2915-44bb-97c4-2f48de797202" src="https://github.com/user-attachments/assets/a152f0b6-be35-4eb9-bc06-c2c56c94b5c2" />
+
+</p>
 
 
+## Introduction
 
+`Amplication` enables you to quickly build, maintain, and scale backend services that embed your company’s best practices and standards.
 
-A full-stack web application that scrapes public Instagram profile data and presents it in a centralized, interactive dashboard with real-time rankings and filtering capabilities.
+With Amplication you can create your own live templates embedding your organization’s best practices and standards, to ensure consistency and compliance from the start. 
 
-## Features
+Leveraging AI-powered automation, Amplication will generate microservices in no time, with everything that is needed to support your business domain: APIs, data models, DTOs and more, allowing engineers to focus on business logic. 
 
-### Data Collection
-- **Public Profile Scraping**: Collects data from public Instagram profiles
-- **Key Metrics**: Username, profile name, followers, following, posts count, engagement rate
-- **Anti-Detection**: Randomized delays, user agent rotation, headless browser automation
-- **Scheduled Updates**: Automatic data refresh every 12-24 hours
+Now your live applications will be always up-to-date. Amplication automatically handles package updates, patches, and versioning, reducing technical debt and ensuring consistency across your services. 
 
-### Dashboard
-- **Real-time Rankings**: Live ranking by followers, engagement, or other metrics
-- **Interactive Table**: Sortable and filterable profile data
-- **Modern UI**: Dark theme with cyan accents, responsive design
-- **Auto-refresh**: Dashboard updates every 30 seconds
-- **Search & Filter**: Find profiles by username or minimum followers
+<details open>
+<summary>
+ Features
+</summary> <br />
 
-### Technical Stack
-- **Backend**: FastAPI (Python) with PostgreSQL database
-- **Frontend**: React with TypeScript and Tailwind CSS
-- **Scraping**: Playwright with anti-detection measures
-- **Task Queue**: Celery with Redis for scheduled scraping
-- **Deployment**: Docker containers with docker-compose
-
-## Quick Start
-
-### Prerequisites
-- Docker and Docker Compose
-- Node.js 18+ (for local development)
-- Python 3.11+ (for local development)
-
-### Using Docker (Recommended)
-
-1. **Clone and Setup**
-   ```bash
-   git clone <repository-url>
-   cd instascrape
-   ```
-
-2. **Start Services**
-   ```bash
-   docker-compose up -d
-   ```
-
-3. **Access the Application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - API Documentation: http://localhost:8000/docs
-
-4. **Populate Sample Data**
-   ```bash
-   # Add some popular Instagram profiles
-   curl -X POST "http://localhost:8000/api/scraper/profiles/sync" \
-        -H "Content-Type: application/json" \
-        -d '{"usernames": ["instagram", "cristiano", "selenagomez", "therock", "arianagrande"]}'
-   ```
-
-### Local Development
-
-1. **Backend Setup**
-   ```bash
-   cd backend
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   playwright install chromium
+<p align="center">
    
-   # Set up environment variables
-   cp .env.example .env
-   # Edit .env with your database and Redis URLs
-   
-   # Run the backend
-   uvicorn app.main:app --reload
-   ```
+   ![readme](https://github.com/user-attachments/assets/e36e2054-83bf-4ae0-ac5b-25d34a97b4db)
 
-2. **Frontend Setup**
-   ```bash
-   cd frontend
-   npm install
-   npm start
-   ```
+</p>
 
-3. **Database Setup**
-   ```bash
-   # Using PostgreSQL locally or Docker
-   docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:15
-   ```
+</details>
 
-## API Endpoints
+## Usage 
 
-### Profiles
-- `GET /api/profiles/` - Get all profiles
-- `GET /api/profiles/ranked?by=followers_count&order=desc` - Get ranked profiles
-- `GET /api/profiles/{username}` - Get specific profile
-- `POST /api/profiles/` - Create new profile
-- `PUT /api/profiles/{username}` - Update profile
-- `DELETE /api/profiles/{username}` - Delete profile
+To get started with Amplication, the hosted version of the product can be used. You can get started immediately at [app.amplication.com](https://app.amplication.com). After the login page, you will be guided through creating your first service. The [website](https://amplication.com) provides an overview of the application, additional information on the product and guides can be found in the [docs](https://docs.amplication.com).
 
-### Scraping
-- `POST /api/scraper/profiles/sync` - Scrape profiles synchronously
-- `POST /api/scraper/profiles` - Scrape profiles in background
-- `POST /api/scraper/update-all` - Update all existing profiles
-- `GET /api/scraper/status` - Get scraper status
+<details>
+<summary>
+  Tutorials
+</summary> <br />
 
-## Configuration
+- [To-do application using Amplication and Angular](https://docs.amplication.com/tutorials/angular-todos)
+- [To-do application using Amplication and React](https://docs.amplication.com/tutorials/react-todos)
+</details>
 
-### Environment Variables
+## Development
 
-**Backend (.env)**
-```env
-DATABASE_URL=postgresql://username:password@localhost:5432/instascrape_db
-REDIS_URL=redis://localhost:6379/0
-SECRET_KEY=your-secret-key-here
-ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
-SCRAPING_DELAY_MIN=2
-SCRAPING_DELAY_MAX=5
+Alternatively, instead of using the hosted version of the product, Amplication can be run locally for code generation purposes or contributions - if so, please refer to our [contributing](#contributing_anchor) section.
+
+<details open>
+<summary>
+Pre-requisites
+</summary> <br />
+To be able to start development on Amplication, make sure that you have the following prerequisites installed:
+
+###
+
+- Node.js
+- Docker
+- Git
+</details>
+
+<details open>
+<summary>
+Running Amplication
+</summary> <br />
+
+> **Note**
+> It is also possible to start development with GitHub Codespaces, when navigating to `< > Code`, select `Codespaces` instead of `Local`. Click on either the `+`-sign or the `Create codespace on master`-button.
+
+Amplication is using a monorepo architecture - powered by <a href="https://nx.dev">Nx Workspaces</a> - where multiple applications and libraries exist in a single repository. To setup a local development environment the following steps can be followed:
+
+**BEFORE** you run the following steps make sure:
+1. You have typescript installed locally on you machine ```npm install -g typescript```
+2. You are using a supported node version (check `engines` `node` in the [package.json](./package.json))
+3. You are using a supported npm version (check `engines` `npm` in the [package.json](./package.json))
+4. You have `docker` installed and running on your machine
+
+
+1. Clone the repository and install dependencies:
+```shell
+git clone https://github.com/amplication/amplication.git && cd amplication && npm install
 ```
 
-**Frontend (.env)**
-```env
-REACT_APP_API_URL=http://localhost:8000
+2. Run the setup script, which takes care of installing dependencies, building packages, and setting up the workspace:
+```shell
+npm run setup:dev
 ```
 
-### Scraping Configuration
-- **Rate Limits**: 2-5 second delays between requests
-- **Max Retries**: 3 attempts per profile
-- **Concurrent Profiles**: Processed sequentially to avoid detection
-- **Update Frequency**: Every 12-24 hours (configurable)
+3. Option 1: Running the required infrastructure - view infrastructure component logs
 
-## Project Structure
 
+```shell
+npm run docker:dev
 ```
-instascrape/
-├── backend/
-│   ├── app/
-│   │   ├── models/          # Database models
-│   │   ├── schemas/         # Pydantic schemas
-│   │   ├── routers/         # API routes
-│   │   ├── scraper/         # Instagram scraper
-│   │   ├── tasks.py         # Celery tasks
-│   │   ├── celery_app.py    # Celery configuration
-│   │   ├── database.py      # Database setup
-│   │   └── main.py          # FastAPI app
-│   ├── requirements.txt
-│   └── Dockerfile
-├── frontend/
-│   ├── src/
-│   │   ├── components/      # React components
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── services/       # API services
-│   │   └── utils/          # Utility functions
-│   ├── package.json
-│   └── Dockerfile
-├── docker-compose.yml
-└── README.md
+3. Option 2: Running the required infrastructure - run the infrastructure components in background
+```shell
+npm run docker:dev -- -d
 ```
 
-## Usage Examples
-
-### Adding New Profiles
-```bash
-# Add multiple profiles
-curl -X POST "http://localhost:8000/api/scraper/profiles/sync" \
-     -H "Content-Type: application/json" \
-     -d '{"usernames": ["username1", "username2", "username3"]}'
+4. Apply database migrations
+```shell
+npm run db:migrate:deploy
 ```
 
-### Getting Ranked Profiles
-```bash
-# Get top 10 profiles by followers
-curl "http://localhost:8000/api/profiles/ranked?by=followers_count&order=desc&limit=10"
+5. To start developing, run one or more of the applications available under `serve:[application]` scripts of the package.json.
 
-# Get profiles by engagement rate
-curl "http://localhost:8000/api/profiles/ranked?by=engagement_rate&order=desc"
+```shell
+# running the server component
+npm run serve:server
+
+# running the client component
+npm run serve:client
+
+# running the data-service-generator component
+npm run serve:dsg
+
+# running the git-sync-manager component
+npm run serve:git
+
+# running the plugin-api component
+npm run serve:plugins
 ```
 
-### Search Profiles
-```bash
-# Search by username
-curl "http://localhost:8000/api/profiles/search/cristiano"
-```
+> **Note**
+> In order to run the Amplication client properly, both the client and server need to be started by the `npm run serve:[application]` command, as well as an additional component for development on a specific component.
 
-## Deployment
+The development environment should now be set up. Additional information on the different application components can be found under packages/`[application]`/README.md file. Happy hacking! 👾
+</details>
 
-### Production Deployment
+## Resources
 
-1. **Update Environment Variables**
-   ```env
-   DATABASE_URL=postgresql://user:pass@prod-db:5432/instascrape
-   REDIS_URL=redis://prod-redis:6379/0
-   SECRET_KEY=your-production-secret-key
-   ALLOWED_ORIGINS=https://yourdomain.com
-   ```
+- **[Website](https://amplication.com)** overview of the product.
+- **[Docs](https://docs.amplication.com)** for comprehensive documentation.
+- **[Blog](https://amplication.com/blog)** for guides and technical comparisons.
+- **[Discord](https://amplication.com/discord)** for support and discussions with the community and the team.
+- **[GitHub](https://github.com/amplication/amplication)** for source code, project board, issues, and pull requests.
+- **[Twitter](https://twitter.com/amplication)** for the latest updates on the product and published blogs.
+- **[YouTube](https://www.youtube.com/c/Amplicationcom)** for guides and technical talks.
 
-2. **Deploy with Docker**
-   ```bash
-   docker-compose -f docker-compose.prod.yml up -d
-   ```
-
-3. **Set up Reverse Proxy** (Nginx example)
-   ```nginx
-   server {
-       listen 80;
-       server_name yourdomain.com;
-       
-       location / {
-           proxy_pass http://localhost:3000;
-       }
-       
-       location /api/ {
-           proxy_pass http://localhost:8000;
-       }
-   }
-   ```
-
-## Ethical Considerations
-
-⚠️ **Important**: This tool is designed for educational and personal use only.
-
-- Only scrapes **public** Instagram profiles
-- Respects rate limits and implements delays
-- Does not attempt to bypass authentication
-- Follows Instagram's robots.txt guidelines
-- Users should review Instagram's Terms of Service
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Scraping Fails**
-   - Check if profiles are public
-   - Verify internet connection
-   - Check for Instagram changes to their structure
-
-2. **Database Connection Issues**
-   - Ensure PostgreSQL is running
-   - Check database credentials
-   - Verify database exists
-
-3. **Frontend Not Loading**
-   - Check if backend API is running
-   - Verify CORS settings
-   - Check browser console for errors
-
-### Logs
-```bash
-# View backend logs
-docker-compose logs backend
-
-# View scraper logs
-docker-compose logs celery-worker
-
-# View all logs
-docker-compose logs -f
-```
-
+<a name="contributing_anchor"></a>
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+The majority of Amplication code is open-source. We are committed to a transparent development process and highly appreciate any contributions. Whether you are helping us fix bugs, proposing new features, improving our documentation or spreading the word - we would love to have you as a part of the Amplication community. Please refer to our [contribution guidelines](./CONTRIBUTING.md) and [code of conduct](./CODE_OF_CONDUCT.md).
+
+- Bug Report: If you see an error message or encounter an issue while using Amplication, please create a [bug report](https://github.com/amplication/amplication/issues/new?assignees=&labels=type%3A+bug&template=bug.yaml&title=%F0%9F%90%9B+Bug+Report%3A+).
+
+- Feature Request: If you have an idea or if there is a capability that is missing and would make development easier and more robust, please submit a [feature request](https://github.com/amplication/amplication/issues/new?assignees=&labels=type%3A+feature+request&template=feature.yml).
+
+- Documentation Request: If you're reading the Amplication docs and feel like you're missing something, please submit a [documentation request](https://github.com/amplication/amplication/issues/new?assignees=&labels=type%3A+docs&template=documentation-request.yaml&title=%F0%9F%93%96+Documentation%3A+).
+
+Not sure where to start? Join our discord and we will help you get started!
+
+<a href="https://amplication.com/discord"><img src="https://amplication.com/images/discord_banner_purple.svg" /></a>
+
+## Contributors
+
+<!---
+npx contributor-faces --exclude "*bot*" --limit 70 --repo "https://github.com/amplication/amplication"
+
+change the height and width for each of the contributors from 80 to 50.
+--->
+
+[//]: contributor-faces
+<a href="https://github.com/yuval-hazaz"><img src="https://avatars.githubusercontent.com/u/43705455?v=4" title="yuval-hazaz" width="50" height="50"></a>
+<a href="https://github.com/iddan"><img src="https://avatars.githubusercontent.com/u/12671072?v=4" title="iddan" width="50" height="50"></a>
+<a href="https://github.com/tupe12334"><img src="https://avatars.githubusercontent.com/u/61761153?v=4" title="tupe12334" width="50" height="50"></a>
+<a href="https://github.com/abrl91"><img src="https://avatars.githubusercontent.com/u/39680385?v=4" title="abrl91" width="50" height="50"></a>
+<a href="https://github.com/morhag90"><img src="https://avatars.githubusercontent.com/u/97830649?v=4" title="morhag90" width="50" height="50"></a>
+<a href="https://github.com/arielweinberger"><img src="https://avatars.githubusercontent.com/u/4976416?v=4" title="arielweinberger" width="50" height="50"></a>
+<a href="https://github.com/EugeneTseitlin"><img src="https://avatars.githubusercontent.com/u/6080188?v=4" title="EugeneTseitlin" width="50" height="50"></a>
+<a href="https://github.com/mshidlov"><img src="https://avatars.githubusercontent.com/u/91742238?v=4" title="mshidlov" width="50" height="50"></a>
+<a href="https://github.com/barshimi"><img src="https://avatars.githubusercontent.com/u/4712526?v=4" title="barshimi" width="50" height="50"></a>
+<a href="https://github.com/overbit"><img src="https://avatars.githubusercontent.com/u/2861984?v=4" title="overbit" width="50" height="50"></a>
+<a href="https://github.com/germanilia"><img src="https://avatars.githubusercontent.com/u/34738985?v=4" title="germanilia" width="50" height="50"></a>
+<a href="https://github.com/shaharblanksela"><img src="https://avatars.githubusercontent.com/u/91251849?v=4" title="shaharblanksela" width="50" height="50"></a>
+<a href="https://github.com/GalCegla"><img src="https://avatars.githubusercontent.com/u/62651890?v=4" title="GalCegla" width="50" height="50"></a>
+<a href="https://github.com/belkind27"><img src="https://avatars.githubusercontent.com/u/71218434?v=4" title="belkind27" width="50" height="50"></a>
+<a href="https://github.com/levivannoort"><img src="https://avatars.githubusercontent.com/u/73097785?v=4" title="levivannoort" width="50" height="50"></a>
+<a href="https://github.com/jainpawan21"><img src="https://avatars.githubusercontent.com/u/39362422?v=4" title="jainpawan21" width="50" height="50"></a>
+<a href="https://github.com/g-traub"><img src="https://avatars.githubusercontent.com/u/33841027?v=4" title="g-traub" width="50" height="50"></a>
+<a href="https://github.com/lalit8347"><img src="https://avatars.githubusercontent.com/u/74647848?v=4" title="lalit8347" width="50" height="50"></a>
+<a href="https://github.com/alonram"><img src="https://avatars.githubusercontent.com/u/40050499?v=4" title="alonram" width="50" height="50"></a>
+<a href="https://github.com/muhsinkamil"><img src="https://avatars.githubusercontent.com/u/62111075?v=4" title="muhsinkamil" width="50" height="50"></a>
+<a href="https://github.com/lokeswaran-aj"><img src="https://avatars.githubusercontent.com/u/74011196?v=4" title="lokeswaran-aj" width="50" height="50"></a>
+<a href="https://github.com/meeroslava"><img src="https://avatars.githubusercontent.com/u/20791516?v=4" title="meeroslava" width="50" height="50"></a>
+<a href="https://github.com/udanna"><img src="https://avatars.githubusercontent.com/u/8627181?v=4" title="udanna" width="50" height="50"></a>
+<a href="https://github.com/CKanishka"><img src="https://avatars.githubusercontent.com/u/30779692?v=4" title="CKanishka" width="50" height="50"></a>
+<a href="https://github.com/gitstart"><img src="https://avatars.githubusercontent.com/u/1501599?v=4" title="gitstart" width="50" height="50"></a>
+<a href="https://github.com/almogbhl"><img src="https://avatars.githubusercontent.com/u/32982671?v=4" title="almogbhl" width="50" height="50"></a>
+<a href="https://github.com/chaiwattsw"><img src="https://avatars.githubusercontent.com/u/30198386?v=4" title="chaiwattsw" width="50" height="50"></a>
+<a href="https://github.com/astitva0011"><img src="https://avatars.githubusercontent.com/u/113434018?v=4" title="astitva0011" width="50" height="50"></a>
+<a href="https://github.com/kalmanl"><img src="https://avatars.githubusercontent.com/u/9283404?v=4" title="kalmanl" width="50" height="50"></a>
+<a href="https://github.com/akshay-bharadva"><img src="https://avatars.githubusercontent.com/u/52954931?v=4" title="akshay-bharadva" width="50" height="50"></a>
+<a href="https://github.com/souravjain540"><img src="https://avatars.githubusercontent.com/u/53312820?v=4" title="souravjain540" width="50" height="50"></a>
+<a href="https://github.com/MoFoGo"><img src="https://avatars.githubusercontent.com/u/96979533?v=4" title="MoFoGo" width="50" height="50"></a>
+<a href="https://github.com/molaycule"><img src="https://avatars.githubusercontent.com/u/20028628?v=4" title="molaycule" width="50" height="50"></a>
+<a href="https://github.com/theamanbhargava"><img src="https://avatars.githubusercontent.com/u/23207069?v=4" title="theamanbhargava" width="50" height="50"></a>
+<a href="https://github.com/MichaelSolati"><img src="https://avatars.githubusercontent.com/u/11811422?v=4" title="MichaelSolati" width="50" height="50"></a>
+<a href="https://github.com/b4s36t4"><img src="https://avatars.githubusercontent.com/u/59088937?v=4" title="b4s36t4" width="50" height="50"></a>
+<a href="https://github.com/gabimoncha"><img src="https://avatars.githubusercontent.com/u/39256258?v=4" title="gabimoncha" width="50" height="50"></a>
+<a href="https://github.com/ShabanaNaik"><img src="https://avatars.githubusercontent.com/u/76608039?v=4" title="ShabanaNaik" width="50" height="50"></a>
+<a href="https://github.com/Spid3rrr"><img src="https://avatars.githubusercontent.com/u/38404399?v=4" title="Spid3rrr" width="50" height="50"></a>
+<a href="https://github.com/mulygottlieb"><img src="https://avatars.githubusercontent.com/u/1912933?v=4" title="mulygottlieb" width="50" height="50"></a>
+<a href="https://github.com/TheLearneer"><img src="https://avatars.githubusercontent.com/u/23402178?v=4" title="TheLearneer" width="50" height="50"></a>
+<a href="https://github.com/wiseaidev"><img src="https://avatars.githubusercontent.com/u/62179149?v=4" title="wiseaidev" width="50" height="50"></a>
+<a href="https://github.com/VoidCupboard"><img src="https://avatars.githubusercontent.com/u/82395440?v=4" title="VoidCupboard" width="50" height="50"></a>
+<a href="https://github.com/kabhamo"><img src="https://avatars.githubusercontent.com/u/74118584?v=4" title="kabhamo" width="50" height="50"></a>
+<a href="https://github.com/michizhou"><img src="https://avatars.githubusercontent.com/u/33012425?v=4" title="michizhou" width="50" height="50"></a>
+<a href="https://github.com/Himanxu1"><img src="https://avatars.githubusercontent.com/u/80101755?v=4" title="Himanxu1" width="50" height="50"></a>
+<a href="https://github.com/ahlavorato"><img src="https://avatars.githubusercontent.com/u/114295834?v=4" title="ahlavorato" width="50" height="50"></a>
+<a href="https://github.com/munyoudoum"><img src="https://avatars.githubusercontent.com/u/60089135?v=4" title="munyoudoum" width="50" height="50"></a>
+<a href="https://github.com/rkshaw20"><img src="https://avatars.githubusercontent.com/u/73245914?v=4" title="rkshaw20" width="50" height="50"></a>
+<a href="https://github.com/yonantan"><img src="https://avatars.githubusercontent.com/u/9935021?v=4" title="yonantan" width="50" height="50"></a>
+<a href="https://github.com/alexbass86"><img src="https://avatars.githubusercontent.com/u/96179897?v=4" title="alexbass86" width="50" height="50"></a>
+<a href="https://github.com/jatinparmar96"><img src="https://avatars.githubusercontent.com/u/15108177?v=4" title="jatinparmar96" width="50" height="50"></a>
+<a href="https://github.com/AllMikeNoIke"><img src="https://avatars.githubusercontent.com/u/20914059?v=4" title="AllMikeNoIke" width="50" height="50"></a>
+<a href="https://github.com/ilovetensor"><img src="https://avatars.githubusercontent.com/u/96976448?v=4" title="ilovetensor" width="50" height="50"></a>
+<a href="https://github.com/asharonbaltazar"><img src="https://avatars.githubusercontent.com/u/58940073?v=4" title="asharonbaltazar" width="50" height="50"></a>
+<a href="https://github.com/goingdust"><img src="https://avatars.githubusercontent.com/u/87334449?v=4" title="goingdust" width="50" height="50"></a>
+
+[//]: contributor-faces
 
 ## License
 
-This project is for educational purposes only. Please ensure compliance with Instagram's Terms of Service and applicable laws in your jurisdiction.
-
-## Support
-
-For issues and questions:
-1. Check the troubleshooting section
-2. Review the API documentation at `/docs`
-3. Open an issue on GitHub
-
----
-
-**Note**: This application is designed to work with public Instagram data only. Always respect website terms of service and implement appropriate rate limiting.
+A large part of this project is licensed under the [Apache 2.0](./LICENSE) license. The only exception are the components under the `ee` (enterprise edition) directory, these are licensed under the [Amplication Enterprise Edition](./ee/LICENSE) license.
