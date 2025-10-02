@@ -17,27 +17,38 @@
 
 
 ## Introduction
+The Instagram landscape generates massive amounts of public data daily, yet extracting meaningful insights across multiple profiles remains challenging for marketers, researchers, and analysts. This system addresses that gap by creating an automated pipeline that ethically collects public Instagram profile data, processes engagement metrics, and presents comprehensive analytics through an intuitive dashboard interface.
 
-`Amplication` enables you to quickly build, maintain, and scale backend services that embed your company’s best practices and standards.
+The platform transforms scattered public profile information into actionable intelligence, enabling users to track follower growth trends, analyze engagement patterns, and benchmark profile performance across their target audience segments.
 
-With Amplication you can create your own live templates embedding your organization’s best practices and standards, to ensure consistency and compliance from the start. 
+Key Features
 
-Leveraging AI-powered automation, Amplication will generate microservices in no time, with everything that is needed to support your business domain: APIs, data models, DTOs and more, allowing engineers to focus on business logic. 
+Intelligent Web Scraping: Ethical extraction of public Instagram profile data with anti-detection mechanisms
 
-Now your live applications will be always up-to-date. Amplication automatically handles package updates, patches, and versioning, reducing technical debt and ensuring consistency across your services. 
+Real-time Dashboard: Interactive analytics interface with live data updates every 5-10 minutes
 
-<details open>
-<summary>
- Features
-</summary> <br />
+Engagement Analytics: Calculated engagement rates with historical tracking capabilities
+
+Multi-metric Ranking: Dynamic sorting by followers, engagement rate, post frequency, and growth metrics
+
+Automated Updates: Scheduled data collection with configurable refresh intervals
+
+Responsive Design: Fully functional across desktop, tablet, and mobile devices
+
+RESTful API: Complete backend API for integration with external tools
+
+Docker Deployment: One-command setup for development and production environments
+
+
 
 <p align="center">
    
-   ![readme](https://github.com/user-attachments/assets/e36e2054-83bf-4ae0-ac5b-25d34a97b4db)
+  ![readme](https://github.com/user-attachments/assets/ca99095c-0a14-4617-9b0a-de4c2db975b1)
+
 
 </p>
 
-</details>
+
 
 ## Usage 
 
