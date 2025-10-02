@@ -137,13 +137,6 @@ graph TB
     F --> D
 ```
 
-### **Technology Stack**
-- **Frontend**: React 18+ with modern UI components
-- **Backend**: Flask REST API with SQLAlchemy ORM
-- **Database**: PostgreSQL with optimized schema
-- **Scraping**: Python with Selenium/Playwright for JavaScript rendering
-- **Deployment**: Docker containers with docker-compose
-- **Scheduling**: Background tasks for automated data collection
 
 ## 📦 Installation
 
@@ -186,36 +179,19 @@ npm start
 
 ### Environment Setup
 
-Create a `.env` file in the root directory with the following variables:
+Create a `.env` file in the root directory with the following essential variables:
 
 ```bash
 # Database Configuration
 DATABASE_URL=postgresql://username:password@localhost:5432/instagram_analytics
 REDIS_URL=redis://localhost:6379/0
 
-# Instagram Scraping Configuration
-INSTAGRAM_DELAY_MIN=2
-INSTAGRAM_DELAY_MAX=8
-INSTAGRAM_MAX_RETRIES=3
-INSTAGRAM_TIMEOUT=30
-
 # API Configuration
-FLASK_ENV=development
-FLASK_DEBUG=True
 SECRET_KEY=your-secret-key-here
-
-# Optional: Proxy Configuration
-PROXY_ENABLED=False
-PROXY_LIST=http://proxy1:port,http://proxy2:port
-
-# Optional: Email Configuration (for notifications)
-SMTP_SERVER=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USERNAME=your-email@gmail.com
-SMTP_PASSWORD=your-app-password
+FLASK_ENV=development
 ```
 
-**Important**: Replace placeholder values with your actual configuration. Never commit the `.env` file to version control.
+**Note**: See `.env.example` for additional configuration options.
 
 ## 🎯 Usage
 
@@ -262,33 +238,10 @@ cp .env.example .env
 docker-compose up -d
 ```
 
-### Cloud Deployment
-
-The application is designed for easy deployment on:
-- **AWS**: ECS, RDS, and S3
-- **Google Cloud**: Cloud Run and Cloud SQL
-- **Heroku**: One-click deployment
-- **DigitalOcean**: App Platform
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
-
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
-npm install --dev
-
-# Run tests
-python -m pytest
-npm test
-
-# Code formatting
-black .
-prettier --write .
-```
+Contributions are welcome! Please feel free to submit a Pull Request.
 ## ⚖️ Legal & Ethical Considerations
 
 This project is designed for **educational and personal use only**. Please ensure you:
